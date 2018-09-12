@@ -7,7 +7,7 @@ const parts = [
       size_l: 10,
       size_w: 20,
       size_h: 310,
-      amount: 100,
+      amount: 101,
       enum: "21324"
     }
   }
