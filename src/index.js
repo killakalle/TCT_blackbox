@@ -60,8 +60,15 @@ function bb_partVisible(values) {
 }
 
 function bb_surfaceQuality(values) {
-  if (values.partVisible == true) return 0.3;
-  else return 1;
+  //return getEnumSurfaceQualityValue(values, "enumSurfaceQuality");
+  switch (values.surfaceQuality) {
+    case "rough":
+      return 1;
+    case "medium":
+      return 0.5;
+    case "smooth":
+      return 0.1;
+  }
 }
 
 // scores
@@ -89,6 +96,10 @@ const scores = [economical, technological];
 // helper functions
 function getEnumValue(values, name) {
   return enumValues[values[name]];
+}
+
+function getEnumSurfaceQualityValue(values, name) {
+  return enumSurfaceQuality[values[name]];
 }
 
 // ignore: render output
