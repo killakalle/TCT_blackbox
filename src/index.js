@@ -13,8 +13,13 @@ const parts = [
       size_l: 100,
       size_w: 20,
       size_h: 310,
+      material: "PA66",
       partVisible: true,
       surfaceQuality: "rough",
+      tolerances: "4/10",
+      color: "uni",
+      heatResistance: true,
+      coldResistance: false,
       amount: 103,
       enum: "21324"
     }
@@ -24,6 +29,15 @@ const parts = [
 // get enum values with getEnumValue(values, "name of enum")
 const enumValues = { "21324": 1, "21": 0.5 };
 const enumSurfaceQuality = { rough: 1, medium: 0.5, smooth: 0.1 };
+const enumTolerances = {
+  "< 1/10": 0.3,
+  "1/10": 0.5,
+  "2/10": 0.6,
+  "3/10": 0.7,
+  "4/10": 0.8,
+  "5/10": 0.9,
+  "> 5/10": 1
+};
 
 // blackboxes
 // should return a number between 0 and 1
@@ -54,8 +68,31 @@ function bb_size(values) {
   }
 }
 
+function bb_material(values) {
+  //return getEnumSurfaceQualityValue(values, "enumSurfaceQuality");
+  switch (values.material) {
+    case "ABS":
+    case "PA6":
+    case "PA11":
+    case "PA12":
+    case "TPE":
+    case "AISI 304":
+      return 1;
+    case "PA6 + 30%GF":
+      return 0.8;
+    case "AISI 302":
+    case "PA66":
+    case "PA66 + 30%GF":
+    case "POM":
+    case "Neoprene":
+      return 0.5;
+    case "Grey cast iron":
+      return 0.3;
+  }
+}
+
 function bb_partVisible(values) {
-  if (values.partVisible == true) return 0.3;
+  if (values.partVisible == true) return 0.33;
   else return 1;
 }
 
@@ -71,6 +108,48 @@ function bb_surfaceQuality(values) {
   }
 }
 
+function bb_tolerances(values) {
+  switch (values.tolerances) {
+    case "< 1/10":
+      return 0.3;
+    case "1/10":
+      return 0.5;
+    case "2/10":
+      return 0.6;
+    case "3/10":
+      return 0.7;
+    case "4/10":
+      return 0.8;
+    case "5/10":
+      return 0.9;
+    case "> 5/10":
+      return 1;
+    default:
+      return 0;
+  }
+}
+
+function bb_color(values) {
+  switch (values.color) {
+    case "unicolor":
+      return 1;
+    case "multi color":
+      return 0.4;
+    default:
+      return 0;
+  }
+}
+
+function bb_heatResistance(values) {
+  if (values.heatResistance == true) return 0.35;
+  else return 1;
+}
+
+function bb_coldResistance(values) {
+  if (values.ColdResistance == true) return 0.55;
+  else return 1;
+}
+
 // scores
 
 function economical(values) {
@@ -81,7 +160,16 @@ function technological(values) {
   //  return getEnumValue(values, "enum");
   var score_tech = 0;
 
-  var blackboxes = [bb_size, bb_partVisible, bb_surfaceQuality];
+  var blackboxes = [
+    bb_size,
+    bb_material,
+    bb_partVisible,
+    bb_surfaceQuality,
+    bb_tolerances,
+    bb_color,
+    bb_heatResistance,
+    bb_coldResistance
+  ];
   var blackboxesLength = blackboxes.length;
 
   for (var i = 0; i < blackboxesLength; i++) {
