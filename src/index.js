@@ -2,6 +2,26 @@ const parts = [
   {
     name: "Best Part",
     values: {
+      price: 1020,
+      demand: 10,
+      minOrderQuantity: 10,
+      supplyLeadTime: "within 90 days",
+      qualification: false,
+      size_l: 120,
+      size_w: 200,
+      size_h: 201,
+      material: "PA66",
+      partVisible: null,
+      surfaceQuality: "rough",
+      tolerances: "0.4 mm",
+      color: null,
+      heatResistance: true,
+      coldResistance: false
+    }
+  },
+  {
+    name: "Second Best Part",
+    values: {
       price: 120,
       demand: 103,
       minOrderQuantity: 10,
@@ -15,6 +35,26 @@ const parts = [
       surfaceQuality: "rough",
       tolerances: "0.4 mm",
       color: null,
+      heatResistance: true,
+      coldResistance: false
+    }
+  },
+  {
+    name: "Third Best Part",
+    values: {
+      price: 20,
+      demand: 1003,
+      minOrderQuantity: 1001,
+      supplyLeadTime: "within 90 days",
+      qualification: true,
+      size_l: 120,
+      size_w: 9000,
+      size_h: 201,
+      material: "Grey cast iron",
+      partVisible: true,
+      surfaceQuality: "smooth",
+      tolerances: "0.1 mm",
+      color: "unicolor",
       heatResistance: true,
       coldResistance: false
     }
@@ -78,12 +118,27 @@ function bb_supplyLeadTime(values) {
 }
 function bb_minOrderQuantity(values) {
   if (values.minOrderQuantity == null) return null;
-}
-function bb_supplyLeadTime(values) {
-  if (values.supplyLeadTime == null) return null;
+
+  switch (true) {
+    case values.demand < 10:
+      return 0.1;
+    case values.demand < 50:
+      return 0.22;
+    case values.demand < 100:
+      return 0.45;
+    case values.demand < 500:
+      return 0.72;
+    case values.demand < 1000:
+      return 0.88;
+    default:
+      return 1;
+  }
 }
 function bb_qualification(values) {
   if (values.qualification == null) return null;
+
+  if (values.qualification === false) return 1;
+  if (values.qualification === true) return 0;
 }
 
 // Tech score blackoxes //
@@ -135,7 +190,7 @@ function bb_material(values) {
 function bb_partVisible(values) {
   if (values.partVisible == null) return null;
   if (values.partVisible === true) return 0.33;
-  else return 1;
+  if (values.partVisible === false) return 1;
 }
 function bb_surfaceQuality(values) {
   if (values.surfaceQuality == null) return null;
@@ -151,6 +206,7 @@ function bb_surfaceQuality(values) {
 }
 function bb_tolerances(values) {
   if (values.tolerances == null) return null;
+
   switch (values.tolerances) {
     case "< 0.1 mm":
       return 0.3;
@@ -172,6 +228,7 @@ function bb_tolerances(values) {
 }
 function bb_color(values) {
   if (values.color == null) return null;
+
   switch (values.color) {
     case "unicolor":
       return 1;
