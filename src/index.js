@@ -15,7 +15,7 @@ const parts = [
       amount: 103,
       size_l: 120,
       size_w: 200,
-      size_h: 200,
+      size_h: 201,
       material: "PA66",
       partVisible: null,
       surfaceQuality: "rough",
