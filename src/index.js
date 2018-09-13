@@ -275,16 +275,19 @@ function getEnumSurfaceQualityValue(values, name) {
 }
 
 // ignore: render output
-const head = ["Name"]
-  .concat(scores.map(score => score.name))
-  .map(x => `<th>${x}</th>`)
-  .join("");
+const head =
+  ["Name"]
+    .concat(scores.map(score => score.name))
+    .map(x => `<th>${x}</th>`)
+    .join("") + "<th>Total Score</th>";
 const body = parts
   .map(
     part =>
       `<tr><td>${part.name}</td> ${scores
         .map(score => `<td>${score(part.values)}</td>`)
-        .join("")}</tr>`
+        .join("")}<td>${scores
+        .map(score => score(part.values))
+        .reduce((a, b) => a + b, 0) / 2}</td></tr>`
   )
   .join("");
 document.getElementById(
