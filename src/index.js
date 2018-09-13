@@ -10,18 +10,19 @@ const parts = [
   {
     name: "Best Part",
     values: {
-      size_l: 100,
-      size_w: 20,
-      size_h: 310,
+      enum: "21324",
+      price: 120,
+      amount: 103,
+      size_l: 120,
+      size_w: 200,
+      size_h: 200,
       material: "PA66",
-      partVisible: true,
+      partVisible: null,
       surfaceQuality: "rough",
       tolerances: "4/10",
-      color: "uni",
+      color: null,
       heatResistance: true,
-      coldResistance: false,
-      amount: 103,
-      enum: "21324"
+      coldResistance: false
     }
   }
 ];
@@ -43,12 +44,54 @@ const enumTolerances = {
 // should return a number between 0 and 1
 
 function anyBlackbox(values) {
+  if (values.whatever == null) return null;
+
   if (values.size < 1) return 1;
   if (values.size < 5) return 0.5;
   return 0;
 }
 
+// Econ score blackoxes
+
+function bb_price(values) {
+  if (values.price == null) return null;
+
+  // UPDATE ME WITH CORRECT VALUES
+  switch (true) {
+    case values.price < 700:
+      return 0.5;
+    case values.price < 1000:
+      return 0.7;
+    case values.price < 125000:
+      return 1;
+    case values.price < 3375000:
+      return 0.7;
+    case values.price < 54872000:
+      return 0.5;
+    default:
+      return 0;
+  }
+}
+
+function bb_demand(values) {
+  if (values.demand == null) return null;
+}
+function bb_minOrderQuantity(values) {
+  if (values.minOrderQuantity == null) return null;
+}
+function bb_supplyLeadTime(values) {
+  if (values.supplyLeadTime == null) return null;
+}
+function bb_qualification(values) {
+  if (values.qualification == null) return null;
+}
+
+// Tech score blackoxes
+
 function bb_size(values) {
+  if (values.size_l == null || values.size_w == null || values.size_h == null)
+    return null;
+
   var size;
   size = values.size_l * values.size_w * values.size_h;
 
@@ -69,6 +112,7 @@ function bb_size(values) {
 }
 
 function bb_material(values) {
+  if (values.material == null) return null;
   //return getEnumSurfaceQualityValue(values, "enumSurfaceQuality");
   switch (values.material) {
     case "ABS":
@@ -92,11 +136,14 @@ function bb_material(values) {
 }
 
 function bb_partVisible(values) {
+  if (values.partVisible == null) return null;
   if (values.partVisible == true) return 0.33;
   else return 1;
 }
 
 function bb_surfaceQuality(values) {
+  if (values.surfaceQuality == null) return null;
+
   //return getEnumSurfaceQualityValue(values, "enumSurfaceQuality");
   switch (values.surfaceQuality) {
     case "rough":
@@ -109,6 +156,7 @@ function bb_surfaceQuality(values) {
 }
 
 function bb_tolerances(values) {
+  if (values.tolerances == null) return null;
   switch (values.tolerances) {
     case "< 1/10":
       return 0.3;
@@ -130,6 +178,7 @@ function bb_tolerances(values) {
 }
 
 function bb_color(values) {
+  if (values.color == null) return null;
   switch (values.color) {
     case "unicolor":
       return 1;
@@ -141,11 +190,14 @@ function bb_color(values) {
 }
 
 function bb_heatResistance(values) {
+  if (values.heatResistance == null) return null;
   if (values.heatResistance == true) return 0.35;
   else return 1;
 }
 
 function bb_coldResistance(values) {
+  if (values.ColdResistance == null) return null;
+
   if (values.ColdResistance == true) return 0.55;
   else return 1;
 }
@@ -153,7 +205,25 @@ function bb_coldResistance(values) {
 // scores
 
 function economical(values) {
-  return anyBlackbox(values) / values.amount;
+  var score_econ = 0;
+
+  var blackboxes = [
+    bb_price,
+    bb_demand,
+    bb_minOrderQuantity,
+    bb_supplyLeadTime,
+    bb_qualification
+  ];
+
+  var countNull = 0;
+  var bbRes;
+  for (var i = 0; i < blackboxes.length; i++) {
+    bbRes = blackboxes[i](values);
+    if (bbRes == null) countNull++;
+    else score_econ += blackboxes[i](values);
+  }
+
+  return score_econ / (blackboxes.length - countNull);
 }
 
 function technological(values) {
@@ -170,12 +240,16 @@ function technological(values) {
     bb_heatResistance,
     bb_coldResistance
   ];
-  var blackboxesLength = blackboxes.length;
 
-  for (var i = 0; i < blackboxesLength; i++) {
-    score_tech += blackboxes[i](values);
+  var countNull = 0;
+  var bbRes;
+  for (var i = 0; i < blackboxes.length; i++) {
+    bbRes = blackboxes[i](values);
+    if (bbRes == null) countNull++;
+    else score_tech += blackboxes[i](values);
   }
-  return score_tech / blackboxesLength;
+
+  return score_tech / (blackboxes.length - countNull);
 }
 
 // define score functions
