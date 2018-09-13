@@ -56,25 +56,35 @@ function anyBlackbox(values) {
 function bb_price(values) {
   if (values.price == null) return null;
 
-  // UPDATE ME WITH CORRECT VALUES
   switch (true) {
-    case values.price < 700:
+    case values.price < 50:
+      return 0;
+    case values.price < 100:
+      return 0.3;
+    case values.price < 500:
       return 0.5;
     case values.price < 1000:
       return 0.7;
-    case values.price < 125000:
-      return 1;
-    case values.price < 3375000:
-      return 0.7;
-    case values.price < 54872000:
-      return 0.5;
     default:
-      return 0;
+      return 1;
   }
 }
 
 function bb_demand(values) {
   if (values.demand == null) return null;
+
+  switch (true) {
+    case values.demand < 10:
+      return 1;
+    case values.demand < 100:
+      return 0.7;
+    case values.demand < 500:
+      return 0.5;
+    case values.demand < 1000:
+      return 0.3;
+    default:
+      return 1;
+  }
 }
 function bb_minOrderQuantity(values) {
   if (values.minOrderQuantity == null) return null;
