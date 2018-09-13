@@ -113,7 +113,6 @@ function bb_size(values) {
 
 function bb_material(values) {
   if (values.material == null) return null;
-
   //return getEnumSurfaceQualityValue(values, "enumSurfaceQuality");
   switch (values.material) {
     case "ABS":
@@ -138,7 +137,6 @@ function bb_material(values) {
 
 function bb_partVisible(values) {
   if (values.partVisible == null) return null;
-
   if (values.partVisible == true) return 0.33;
   else return 1;
 }
@@ -159,7 +157,6 @@ function bb_surfaceQuality(values) {
 
 function bb_tolerances(values) {
   if (values.tolerances == null) return null;
-
   switch (values.tolerances) {
     case "< 1/10":
       return 0.3;
@@ -182,7 +179,6 @@ function bb_tolerances(values) {
 
 function bb_color(values) {
   if (values.color == null) return null;
-
   switch (values.color) {
     case "unicolor":
       return 1;
@@ -195,7 +191,6 @@ function bb_color(values) {
 
 function bb_heatResistance(values) {
   if (values.heatResistance == null) return null;
-
   if (values.heatResistance == true) return 0.35;
   else return 1;
 }
