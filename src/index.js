@@ -2,21 +2,21 @@ const parts = [
   {
     name: "Best Part",
     values: {
-      price: 1020,
-      demand: 10,
-      minOrderQuantity: 10,
+      price: 10200,
+      demand: 9,
+      minOrderQuantity: 11000,
       supplyLeadTime: "within 90 days",
-      qualification: false,
+      qualification: true,
       size_l: 120,
       size_w: 200,
       size_h: 201,
-      material: "PA66",
-      partVisible: null,
+      material: "PA6",
+      partVisible: false,
       surfaceQuality: "rough",
-      tolerances: "0.4 mm",
-      color: null,
-      heatResistance: true,
-      coldResistance: false
+      tolerances: "0.5 mm",
+      color: "unicolor",
+      heatResistance: false,
+      coldResistance: true
     }
   },
   {
@@ -120,15 +120,15 @@ function bb_minOrderQuantity(values) {
   if (values.minOrderQuantity == null) return null;
 
   switch (true) {
-    case values.demand < 10:
+    case values.minOrderQuantity < 10:
       return 0.1;
-    case values.demand < 50:
+    case values.minOrderQuantity < 50:
       return 0.22;
-    case values.demand < 100:
+    case values.minOrderQuantity < 100:
       return 0.45;
-    case values.demand < 500:
+    case values.minOrderQuantity < 500:
       return 0.72;
-    case values.demand < 1000:
+    case values.minOrderQuantity < 1000:
       return 0.88;
     default:
       return 1;
@@ -244,9 +244,9 @@ function bb_heatResistance(values) {
   else return 1;
 }
 function bb_coldResistance(values) {
-  if (values.ColdResistance == null) return null;
+  if (values.coldResistance == null) return null;
 
-  if (values.ColdResistance === true) return 0.55;
+  if (values.coldResistance === true) return 0.55;
   else return 1;
 }
 
