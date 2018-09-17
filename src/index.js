@@ -95,7 +95,7 @@ function bb_demand(values) {
     case values.demand < 1000:
       return 0.3;
     default:
-      return 1;
+      return 0;
   }
 }
 function bb_supplyLeadTime(values) {
