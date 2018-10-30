@@ -66,57 +66,28 @@ const parts = [
 
 // Econ score blackoxes //
 
-function bb_price(values) {
-  if (values.price == null) return null;
-
-  switch (true) {
-    case values.price < 50:
-      return 0;
-    case values.price < 100:
-      return 0.3;
-    case values.price < 500:
-      return 0.5;
-    case values.price < 1000:
-      return 0.7;
-    default:
-      return 1;
-  }
-}
-function bb_demand(values) {
-  if (values.demand == null) return null;
-
-  switch (true) {
-    case values.demand < 10:
-      return 1;
-    case values.demand < 100:
-      return 0.7;
-    case values.demand < 500:
-      return 0.5;
-    case values.demand < 1000:
-      return 0.3;
-    default:
-      return 0;
-  }
-}
-function bb_supplyLeadTime(values) {
+// Derzeitige / alte Lieferzeiten
+function bb_econ_supplyLeadTime(values) {
   if (values.supplyLeadTime == null) return null;
 
-  switch (values.supplyLeadTime) {
-    case "within 0-3 days":
-      return 0;
-    case "within 7 days":
-      return 0.25;
-    case "within 14 days":
-      return 0.5;
-    case "within 30 days":
-      return 0.77;
-    case "within 90 days":
-      return 0.88;
-    case "currently not available":
+  switch (true) {
+    case values.supplyLeadTime < 10:
       return 0.1;
+    case values.supplyLeadTime < 50:
+      return 0.22;
+    case values.supplyLeadTime < 100:
+      return 0.45;
+    case values.supplyLeadTime < 500:
+      return 0.72;
+    case values.supplyLeadTime < 1000:
+      return 0.88;
+    default:
+      return 1;
   }
 }
-function bb_minOrderQuantity(values) {
+
+// Derzeitige Mindestabnahmemenge
+function bb_econ_minOrderQuantity(values) {
   if (values.minOrderQuantity == null) return null;
 
   switch (true) {
@@ -134,6 +105,159 @@ function bb_minOrderQuantity(values) {
       return 1;
   }
 }
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_price(values) {
+  if (values.price == null) return null;
+
+  switch (true) {
+    case values.price < 50:
+      return 0;
+    case values.price < 100:
+      return 0.3;
+    case values.price < 500:
+      return 0.5;
+    case values.price < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+function bb_econ_demand(values) {
+  if (values.demand == null) return null;
+
+  switch (true) {
+    case values.demand < 10:
+      return 1;
+    case values.demand < 100:
+      return 0.7;
+    case values.demand < 500:
+      return 0.5;
+    case values.demand < 1000:
+      return 0.3;
+    default:
+      return 0;
+  }
+}
+
 function bb_qualification(values) {
   if (values.qualification == null) return null;
 
@@ -142,7 +266,8 @@ function bb_qualification(values) {
 }
 
 // Tech score blackoxes //
-function bb_size(values) {
+
+function bb_tech_size(values) {
   if (values.size_l == null || values.size_w == null || values.size_h == null)
     return null;
 
@@ -164,7 +289,7 @@ function bb_size(values) {
       return 0;
   }
 }
-function bb_material(values) {
+function bb_tech_material(values) {
   if (values.material == null) return null;
   //return getEnumSurfaceQualityValue(values, "enumSurfaceQuality");
   switch (values.material) {
@@ -187,12 +312,12 @@ function bb_material(values) {
       return 0.3;
   }
 }
-function bb_partVisible(values) {
+function bb_tech_partVisible(values) {
   if (values.partVisible == null) return null;
   if (values.partVisible === true) return 0.33;
   if (values.partVisible === false) return 1;
 }
-function bb_surfaceQuality(values) {
+function bb_tech_surfaceQuality(values) {
   if (values.surfaceQuality == null) return null;
 
   switch (values.surfaceQuality) {
@@ -204,7 +329,7 @@ function bb_surfaceQuality(values) {
       return 0.1;
   }
 }
-function bb_tolerances(values) {
+function bb_tech_tolerances(values) {
   if (values.tolerances == null) return null;
 
   switch (values.tolerances) {
@@ -226,7 +351,7 @@ function bb_tolerances(values) {
       return 0;
   }
 }
-function bb_color(values) {
+function bb_tech_color(values) {
   if (values.color == null) return null;
 
   switch (values.color) {
@@ -238,16 +363,203 @@ function bb_color(values) {
       return 0;
   }
 }
-function bb_heatResistance(values) {
+function bb_tech_heatResistance(values) {
   if (values.heatResistance == null) return null;
   if (values.heatResistance === true) return 0.35;
   else return 1;
 }
-function bb_coldResistance(values) {
+function bb_tech_coldResistance(values) {
   if (values.coldResistance == null) return null;
 
   if (values.coldResistance === true) return 0.55;
   else return 1;
+}
+
+function bb_tech_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
+}
+
+function bb_econ_(values) {
+  if (values.XXX == null) return null;
+
+  switch (true) {
+    case values.XXX < 50:
+      return 0;
+    case values.XXX < 100:
+      return 0.3;
+    case values.XXX < 500:
+      return 0.5;
+    case values.XXX < 1000:
+      return 0.7;
+    default:
+      return 1;
+  }
 }
 
 // scores
@@ -255,10 +567,10 @@ function economical(values) {
   var score_econ = 0;
 
   var blackboxes = [
-    bb_price,
-    bb_demand,
-    bb_minOrderQuantity,
-    bb_supplyLeadTime,
+    bb_econ_price,
+    bb_econ_demand,
+    bb_econ_minOrderQuantity,
+    bb_econ_supplyLeadTime,
     bb_qualification
   ];
 
@@ -277,14 +589,14 @@ function technological(values) {
   var score_tech = 0;
 
   var blackboxes = [
-    bb_size,
-    bb_material,
-    bb_partVisible,
-    bb_surfaceQuality,
-    bb_tolerances,
-    bb_color,
-    bb_heatResistance,
-    bb_coldResistance
+    bb_tech_size,
+    bb_tech_material,
+    bb_tech_partVisible,
+    bb_tech_surfaceQuality,
+    bb_tech_tolerances,
+    bb_tech_color,
+    bb_tech_heatResistance,
+    bb_tech_coldResistance
   ];
 
   var countNull = 0;
