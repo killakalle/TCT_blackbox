@@ -2,63 +2,93 @@ const parts = [
   {
     name: "Best Part",
     values: {
-      price: 10200,
-      demand: 9,
-      minOrderQuantity: 11000,
-      supplyLeadTime: "within 90 days",
-      qualification: true,
-      size_l: 120,
-      size_w: 200,
-      size_h: 201,
-      material: "PA6",
-      partVisible: false,
-      surfaceQuality: "rough",
-      tolerances: "0.5 mm",
-      color: "unicolor",
-      heatResistance: false,
-      coldResistance: true
+      complexity: "Gering",
+      supplyLeadTime: 25,
+      partPrice: 150,
+      minOrderQuantity: 100,
+      frequency: "Jährlich",
+      traditionalManufacturing: "Spritzgießen",
+      safetyRelevance: true,
+      quantity: 250,
+      availabilityImprovement: "sechs Monate",
+      outsideArea: "Innenbereich",
+      fireSafety: false,
+      size_b: 25,
+      chemicalResistance: true,
+      uniColor: "mehrfarbig",
+      electricIsolation: true,
+      electroconductive: null,
+      moisture: null,
+      shapeAccuracy: "Mittel",
+      basicColour: "Schwarz",
+      heatResistance: null,
+      size_h: 144,
+      hygiene: true,
+      coldResistance: true,
+      size_l: 122,
+      mechanicalForceType: "dynamisch",
+      mechanicalForceIntensity: "Mittel",
+      surface: "Glatt/Glänzend",
+      visiblePart: true,
+      uvResistance: true,
+      material: "Metall"
     }
   },
   {
-    name: "Second Best Part",
+    name: "Second Part",
     values: {
-      price: 120,
-      demand: 103,
-      minOrderQuantity: 10,
-      supplyLeadTime: "within 90 days",
-      qualification: false,
-      size_l: 120,
-      size_w: 200,
-      size_h: 201,
-      material: "PA66",
-      partVisible: null,
-      surfaceQuality: "rough",
-      tolerances: "0.4 mm",
-      color: null,
-      heatResistance: true,
-      coldResistance: false
-    }
-  },
-  {
-    name: "Third Best Part",
-    values: {
-      price: 20,
-      demand: 1003,
-      minOrderQuantity: 1001,
-      supplyLeadTime: "within 90 days",
-      qualification: true,
-      size_l: 120,
-      size_w: 9000,
-      size_h: 201,
-      material: "Grey cast iron",
-      partVisible: true,
-      surfaceQuality: "smooth",
-      tolerances: "0.1 mm",
-      color: "unicolor",
-      heatResistance: true,
-      coldResistance: false
+      complexity: "Mittel",
+      supplyLeadTime: 1225,
+      partPrice: 1150,
+      minOrderQuantity: 100,
+      frequency: "Jährlich",
+      traditionalManufacturing: "Spritzgießen",
+      safetyRelevance: true,
+      quantity: 250,
+      availabilityImprovement: "sechs Monate",
+      outsideArea: "Innenbereich",
+      fireSafety: true,
+      size_b: 225,
+      chemicalResistance: true,
+      uniColor: "mehrfarbig",
+      electricIsolation: true,
+      electroconductive: null,
+      moisture: true,
+      shapeAccuracy: "Mittel",
+      basicColour: "Schwarz",
+      heatResistance: null,
+      size_h: 144,
+      hygiene: true,
+      coldResistance: true,
+      size_l: 122,
+      mechanicalForceType: "dynamisch",
+      mechanicalForceIntensity: "Mittel",
+      surface: null,
+      visiblePart: true,
+      uvResistance: true,
+      material: "Metall"
     }
   }
+  // {
+  //   name: "Third Best Part",
+  //   values: {
+  //     price: 20,
+  //     demand: 1003,
+  //     minOrderQuantity: 1001,
+  //     supplyLeadTime: "within 90 days",
+  //     qualification: true,
+  //     size_l: 120,
+  //     size_w: 9000,
+  //     size_h: 201,
+  //     material: "Grey cast iron",
+  //     partVisible: true,
+  //     surfaceQuality: "smooth",
+  //     tolerances: "0.1 mm",
+  //     color: "unicolor",
+  //     heatResistance: true,
+  //     coldResistance: false
+  //   }
+  // }
 ];
 
 // blackboxes
@@ -70,7 +100,7 @@ const parts = [
 function bb_econ_complexity(values) {
   var propertyValue = values.complexity;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "Gering":
@@ -87,7 +117,7 @@ function bb_econ_complexity(values) {
 function bb_econ_supplyLeadTime(values) {
   var propertyValue = values.supplyLeadTime;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (true) {
     case propertyValue <= 7:
@@ -104,7 +134,7 @@ function bb_econ_supplyLeadTime(values) {
 function bb_econ_partPrice(values) {
   var propertyValue = values.partPrice;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (true) {
     case propertyValue <= 10:
@@ -127,7 +157,7 @@ function bb_econ_partPrice(values) {
 function bb_econ_minOrderQuantity(values) {
   var propertyValue = values.minOrderQuantity;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (true) {
     case propertyValue <= 10:
@@ -150,7 +180,7 @@ function bb_econ_minOrderQuantity(values) {
 function bb_econ_frequency(values) {
   var propertyValue = values.frequency;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "Jährlich":
@@ -165,7 +195,7 @@ function bb_econ_frequency(values) {
 function bb_econ_traditionalManufacturing(values) {
   var propertyValue = values.traditionalManufacturing;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "Drehen":
@@ -184,7 +214,7 @@ function bb_econ_traditionalManufacturing(values) {
 function bb_econ_safetyRelevance(values) {
   var propertyValue = values.safetyRelevance;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   if (propertyValue === true) return 0.35;
   else return 1.0;
@@ -193,7 +223,7 @@ function bb_econ_safetyRelevance(values) {
 function bb_econ_quantity(values) {
   var propertyValue = values.quantity;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (true) {
     case propertyValue < 10:
@@ -212,7 +242,7 @@ function bb_econ_quantity(values) {
 function bb_econ_availabilityImprovement(values) {
   var propertyValue = values.availabilityImprovement;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "einen Monat":
@@ -234,7 +264,7 @@ function bb_econ_availabilityImprovement(values) {
 function bb_tech_outsideArea(values) {
   var propertyValue = values.outsideArea;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "Innenbereich":
@@ -249,7 +279,7 @@ function bb_tech_outsideArea(values) {
 function bb_tech_fireSafety(values) {
   var propertyValue = values.fireSafety;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   if (propertyValue === true) return 0.35;
   else return 1.0;
@@ -261,9 +291,9 @@ function bb_tech_size(values) {
   var propertyValue_h = values.size_h;
 
   if (
-    propertyValue_l == null ||
-    propertyValue_b == null ||
-    values.size_h == null
+    propertyValue_l === null ||
+    propertyValue_b === null ||
+    values.size_h === null
   )
     return null;
 
@@ -289,7 +319,7 @@ function bb_tech_size(values) {
 function bb_tech_chemicalResistance(values) {
   var propertyValue = values.chemicalResistance;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   if (propertyValue === true) return 0.35;
   else return 1.0;
@@ -298,7 +328,7 @@ function bb_tech_chemicalResistance(values) {
 function bb_tech_uniColor(values) {
   var propertyValue = values.uniColor;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "unicolor":
@@ -313,7 +343,7 @@ function bb_tech_uniColor(values) {
 function bb_tech_electricIsolation(values) {
   var propertyValue = values.electricIsolation;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   if (propertyValue === true) return 0.35;
   else return 1.0;
@@ -322,7 +352,7 @@ function bb_tech_electricIsolation(values) {
 function bb_tech_electroconductive(values) {
   var propertyValue = values.electroconductive;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   if (propertyValue === true) return 0.35;
   else return 1.0;
@@ -331,7 +361,7 @@ function bb_tech_electroconductive(values) {
 function bb_tech_moisture(values) {
   var propertyValue = values.moisture;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   if (propertyValue === true) return 0.35;
   else return 1.0;
@@ -340,7 +370,7 @@ function bb_tech_moisture(values) {
 function bb_tech_shapeAccuracy(values) {
   var propertyValue = values.shapeAccuracy;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "Gering":
@@ -357,7 +387,7 @@ function bb_tech_shapeAccuracy(values) {
 function bb_tech_basicColour(values) {
   var propertyValue = values.basicColour;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "Weiß":
@@ -376,7 +406,7 @@ function bb_tech_basicColour(values) {
 function bb_tech_heatResistance(values) {
   var propertyValue = values.heatResistance;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   if (propertyValue === true) return 0.35;
   else return 1.0;
@@ -385,7 +415,7 @@ function bb_tech_heatResistance(values) {
 function bb_tech_hygiene(values) {
   var propertyValue = values.hygene;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   if (propertyValue === true) return 0.35;
   else return 1.0;
@@ -394,7 +424,7 @@ function bb_tech_hygiene(values) {
 function bb_tech_coldResistance(values) {
   var propertyValue = values.coldResistance;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   if (propertyValue === true) return 0.35;
   else return 1.0;
@@ -403,7 +433,7 @@ function bb_tech_coldResistance(values) {
 function bb_tech_mechanicalForceType(values) {
   var propertyValue = values.mechanicalForceType;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "statisch":
@@ -418,7 +448,7 @@ function bb_tech_mechanicalForceType(values) {
 function bb_tech_mechanicalForceIntensity(values) {
   var propertyValue = values.mechanicalForceIntensity;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "Gering":
@@ -435,7 +465,7 @@ function bb_tech_mechanicalForceIntensity(values) {
 function bb_tech_surface(values) {
   var propertyValue = values.surface;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "Rau":
@@ -449,38 +479,38 @@ function bb_tech_surface(values) {
   }
 }
 // Originalwerkstoff
-function bb_tech_originalMaterial(values) {
-  var propertyValue = values.originalMaterial;
+// function bb_tech_originalMaterial(values) {
+//   var propertyValue = values.originalMaterial;
 
-  if (propertyValue == null) return null;
+//   if (propertyValue === null) return null;
 
-  switch (propertyValue) {
-    case "ABS":
-    case "PA6":
-    case "PA11":
-    case "PA12":
-    case "TPE":
-    case "AISI 304":
-      return 1.0;
-    case "PA6 + 30%GF":
-      return 0.8;
-    case "AISI 302":
-    case "PA66":
-    case "PA66 + 30%GF":
-    case "POM":
-    case "Neoprene":
-      return 0.5;
-    case "Grey cast iron":
-      return 0.3;
-    default:
-      return 0.0;
-  }
-}
+//   switch (propertyValue) {
+//     case "ABS":
+//     case "PA6":
+//     case "PA11":
+//     case "PA12":
+//     case "TPE":
+//     case "AISI 304":
+//       return 1.0;
+//     case "PA6 + 30%GF":
+//       return 0.8;
+//     case "AISI 302":
+//     case "PA66":
+//     case "PA66 + 30%GF":
+//     case "POM":
+//     case "Neoprene":
+//       return 0.5;
+//     case "Grey cast iron":
+//       return 0.3;
+//     default:
+//       return 0.0;
+//   }
+// }
 // Sichtteil
 function bb_tech_visiblePart(values) {
   var propertyValue = values.visiblePart;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   if (propertyValue === true) return 0.35;
   else return 1.0;
@@ -489,7 +519,7 @@ function bb_tech_visiblePart(values) {
 function bb_tech_uvResistance(values) {
   var propertyValue = values.uvResistance;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   if (propertyValue === true) return 0.35;
   else return 1.0;
@@ -498,7 +528,7 @@ function bb_tech_uvResistance(values) {
 function bb_tech_material(values) {
   var propertyValue = values.material;
 
-  if (propertyValue == null) return null;
+  if (propertyValue === null) return null;
 
   switch (propertyValue) {
     case "Kunstoff":
@@ -516,40 +546,60 @@ function bb_tech_material(values) {
 function economical(values) {
   var score_econ = 0;
 
-  var blackboxes = [
+  var blackboxes_econ = [
+    bb_econ_complexity,
+    bb_econ_supplyLeadTime,
     bb_econ_partPrice,
     bb_econ_minOrderQuantity,
-    bb_econ_supplyLeadTime
+    bb_econ_frequency,
+    bb_econ_traditionalManufacturing,
+    bb_econ_safetyRelevance,
+    bb_econ_quantity,
+    bb_econ_availabilityImprovement
   ];
 
   var countNull = 0;
   var bbRes;
-  for (var i = 0; i < blackboxes.length; i++) {
-    bbRes = blackboxes[i](values);
-    if (bbRes == null) countNull++;
-    else score_econ += blackboxes[i](values);
+  for (var i = 0; i < blackboxes_econ.length; i++) {
+    bbRes = blackboxes_econ[i](values);
+    if (bbRes === null) countNull++;
+    else score_econ += blackboxes_econ[i](values);
   }
 
-  return score_econ / (blackboxes.length - countNull);
+  return score_econ / (blackboxes_econ.length - countNull);
 }
 function technological(values) {
   //  return getEnumValue(values, "enum");
   var score_tech = 0;
 
   var blackboxes = [
+    bb_tech_outsideArea,
+    bb_tech_fireSafety,
     bb_tech_size,
-    bb_tech_originalMaterial,
-    bb_tech_visiblePart,
+    bb_tech_chemicalResistance,
     bb_tech_uniColor,
+    bb_tech_electricIsolation,
+    bb_tech_electroconductive,
+    bb_tech_moisture,
+    bb_tech_shapeAccuracy,
+    bb_tech_basicColour,
     bb_tech_heatResistance,
-    bb_tech_coldResistance
+    bb_tech_hygiene,
+    bb_tech_coldResistance,
+    bb_tech_mechanicalForceType,
+    bb_tech_mechanicalForceIntensity,
+    bb_tech_surface,
+    // bb_tech_originalMaterial,
+    bb_tech_visiblePart,
+    bb_tech_uvResistance,
+    bb_tech_material
   ];
 
   var countNull = 0;
   var bbRes;
   for (var i = 0; i < blackboxes.length; i++) {
     bbRes = blackboxes[i](values);
-    if (bbRes == null) countNull++;
+    if (bbRes === null) countNull++;
     else score_tech += blackboxes[i](values);
   }
 
