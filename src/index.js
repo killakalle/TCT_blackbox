@@ -68,144 +68,163 @@ const parts = [
 
 // Bauteilkomplexität
 function bb_econ_complexity(values) {
-  if (values.complexity == null) return null;
+  var propertyValue = values.complexity;
 
-  switch (values.complexity) {
-    case "gering":
-      return 0.3;
-    case "mittel":
-      return 0.6;
-    case "hoch":
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
+    case "Gering":
+      return 0.0;
+    case "Mittel":
+      return 0.5;
+    case "Hoch":
       return 1.0;
+    default:
+      return 0.0;
   }
 }
 // Derzeitige / alte Lieferzeiten
 function bb_econ_supplyLeadTime(values) {
-  if (values.supplyLeadTime == null) return null;
+  var propertyValue = values.supplyLeadTime;
+
+  if (propertyValue == null) return null;
 
   switch (true) {
-    case values.supplyLeadTime < 10:
-      return 0.1;
-    case values.supplyLeadTime < 50:
-      return 0.22;
-    case values.supplyLeadTime < 100:
-      return 0.45;
-    case values.supplyLeadTime < 500:
-      return 0.72;
-    case values.supplyLeadTime < 1000:
-      return 0.88;
+    case propertyValue <= 7:
+      return 0.0;
+    case propertyValue <= 30:
+      return 0.5;
+    case propertyValue > 30:
+      return 1.0;
     default:
-      return 1;
+      return 0.0;
   }
 }
 // Derzeitige / alte Stückkosten
 function bb_econ_partPrice(values) {
-  if (values.partPrice == null) return null;
+  var propertyValue = values.partPrice;
+
+  if (propertyValue == null) return null;
 
   switch (true) {
-    case values.partPrice < 50:
-      return 0;
-    case values.partPrice < 100:
-      return 0.3;
-    case values.partPrice < 500:
-      return 0.5;
-    case values.partPrice < 1000:
-      return 0.7;
+    case propertyValue <= 10:
+      return 0.1;
+    case propertyValue <= 50:
+      return 0.22;
+    case propertyValue <= 100:
+      return 0.45;
+    case propertyValue <= 500:
+      return 0.72;
+    case propertyValue <= 1000:
+      return 0.88;
+    case propertyValue > 1000:
+      return 1.0;
     default:
-      return 1;
+      return 0.0;
   }
 }
 // Derzeitige Mindestabnahmemenge
 function bb_econ_minOrderQuantity(values) {
-  if (values.minOrderQuantity == null) return null;
+  var propertyValue = values.minOrderQuantity;
+
+  if (propertyValue == null) return null;
 
   switch (true) {
-    case values.minOrderQuantity < 10:
+    case propertyValue <= 10:
       return 0.1;
-    case values.minOrderQuantity < 50:
+    case propertyValue <= 50:
       return 0.22;
-    case values.minOrderQuantity < 100:
+    case propertyValue <= 100:
       return 0.45;
-    case values.minOrderQuantity < 500:
+    case propertyValue <= 500:
       return 0.72;
-    case values.minOrderQuantity < 1000:
+    case propertyValue <= 1000:
       return 0.88;
+    case propertyValue > 1000:
+      return 1.0;
     default:
-      return 1;
+      return 0.0;
   }
 }
 // Frequenz
 function bb_econ_frequency(values) {
-  if (values.frequency == null) return null;
+  var propertyValue = values.frequency;
 
-  return null;
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
+    case "Jährlich":
+      return 0.8;
+    case "Einmalig":
+      return 1.0;
+    default:
+      return 0.0;
+  }
 }
 // Herkömmliche Fertigung
 function bb_econ_traditionalManufacturing(values) {
-  if (values.traditionalManufacturing == null) return null;
+  var propertyValue = values.traditionalManufacturing;
 
-  switch (values.traditionalManufacturing) {
-    case values.traditionalManufacturing < 50:
-      return 0;
-    case values.traditionalManufacturing < 100:
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
+    case "Drehen":
       return 0.3;
-    case values.traditionalManufacturing < 500:
+    case "Fräsen":
       return 0.5;
-    case values.traditionalManufacturing < 1000:
-      return 0.7;
+    case "Gießen":
+      return 0.8;
+    case "Spritzgießen":
+      return 1.0;
     default:
-      return 1;
+      return 0.0;
   }
 }
 // Sicherheitsrelevanz
 function bb_econ_safetyRelevance(values) {
-  if (values.XXX == null) return null;
+  var propertyValue = values.safetyRelevance;
 
-  switch (true) {
-    case values.XXX < 50:
-      return 0;
-    case values.XXX < 100:
-      return 0.3;
-    case values.XXX < 500:
-      return 0.5;
-    case values.XXX < 1000:
-      return 0.7;
-    default:
-      return 1;
-  }
+  if (propertyValue == null) return null;
+
+  if (propertyValue === true) return 0.35;
+  else return 1.0;
 }
 // Stückzahl
 function bb_econ_quantity(values) {
-  if (values.quantity == null) return null;
+  var propertyValue = values.quantity;
+
+  if (propertyValue == null) return null;
 
   switch (true) {
-    case values.quantity < 10:
-      return 1;
-    case values.quantity < 100:
+    case propertyValue < 10:
+      return 1.0;
+    case propertyValue < 100:
       return 0.7;
-    case values.quantity < 500:
+    case propertyValue < 500:
       return 0.5;
-    case values.quantity < 1000:
+    case propertyValue < 1000:
       return 0.3;
     default:
-      return 0;
+      return 0.0;
   }
 }
 // Verfügbarkeitssteigerung möglich um
 function bb_econ_availabilityImprovement(values) {
-  if (values.XXX == null) return null;
+  var propertyValue = values.availabilityImprovement;
 
-  switch (true) {
-    case values.XXX < 50:
-      return 0;
-    case values.XXX < 100:
-      return 0.3;
-    case values.XXX < 500:
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
+    case "einen Monat":
+      return 0.0;
+    case "drei Monate":
       return 0.5;
-    case values.XXX < 1000:
+    case "sechs Monate":
       return 0.7;
+    case "ein Jahr":
+      return 1.0;
     default:
-      return 1;
+      return 0.0;
   }
 }
 
@@ -213,45 +232,43 @@ function bb_econ_availabilityImprovement(values) {
 
 // Außenbereich?
 function bb_tech_outsideArea(values) {
-  if (values.XXX == null) return null;
+  var propertyValue = values.outsideArea;
 
-  switch (true) {
-    case values.XXX < 50:
-      return 0;
-    case values.XXX < 100:
-      return 0.3;
-    case values.XXX < 500:
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
+    case "Innenbereich":
+      return 1.0;
+    case "Außenbereich":
       return 0.5;
-    case values.XXX < 1000:
-      return 0.7;
     default:
-      return 1;
+      return 0.0;
   }
 }
 // Brandschutzanforderungen
 function bb_tech_fireSafety(values) {
-  if (values.XXX == null) return null;
+  var propertyValue = values.fireSafety;
 
-  switch (true) {
-    case values.XXX < 50:
-      return 0;
-    case values.XXX < 100:
-      return 0.3;
-    case values.XXX < 500:
-      return 0.5;
-    case values.XXX < 1000:
-      return 0.7;
-    default:
-      return 1;
-  }
+  if (propertyValue == null) return null;
+
+  if (propertyValue === true) return 0.35;
+  else return 1.0;
 }
 // Größe (Länge, Breite, Höhe)
 function bb_tech_size(values) {
-  if (values.size_l == null || values.size_w == null || values.size_h == null)
+  var propertyValue_l = values.size_l;
+  var propertyValue_b = values.size_b;
+  var propertyValue_h = values.size_h;
+
+  if (
+    propertyValue_l == null ||
+    propertyValue_b == null ||
+    values.size_h == null
+  )
     return null;
 
   var size;
-  size = values.size_l * values.size_w * values.size_h;
+  size = propertyValue_l * propertyValue_b * propertyValue_h;
 
   switch (true) {
     case size < 700:
@@ -259,200 +276,192 @@ function bb_tech_size(values) {
     case size < 1000:
       return 0.7;
     case size < 125000:
-      return 1;
+      return 1.0;
     case size < 3375000:
       return 0.7;
     case size < 54872000:
       return 0.5;
     default:
-      return 0;
+      return 0.0;
   }
 }
 // Chemische Beständigkeit
 function bb_tech_chemicalResistance(values) {
-  if (values.XXX == null) return null;
+  var propertyValue = values.chemicalResistance;
 
-  switch (true) {
-    case values.XXX < 50:
-      return 0;
-    case values.XXX < 100:
-      return 0.3;
-    case values.XXX < 500:
-      return 0.5;
-    case values.XXX < 1000:
-      return 0.7;
-    default:
-      return 1;
-  }
+  if (propertyValue == null) return null;
+
+  if (propertyValue === true) return 0.35;
+  else return 1.0;
 }
 // Ein- oder mehrfarbig
 function bb_tech_uniColor(values) {
-  if (values.color == null) return null;
+  var propertyValue = values.uniColor;
 
-  switch (values.color) {
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
     case "unicolor":
-      return 1;
+      return 1.0;
     case "multi color":
       return 0.4;
     default:
-      return 0;
+      return 0.0;
   }
 }
 // Elektrisch - isolierend
 function bb_tech_electricIsolation(values) {
-  if (values.XXX == null) return null;
+  var propertyValue = values.electricIsolation;
 
-  switch (true) {
-    case values.XXX < 50:
-      return 0;
-    case values.XXX < 100:
-      return 0.3;
-    case values.XXX < 500:
-      return 0.5;
-    case values.XXX < 1000:
-      return 0.7;
-    default:
-      return 1;
-  }
+  if (propertyValue == null) return null;
+
+  if (propertyValue === true) return 0.35;
+  else return 1.0;
 }
 // Elektrisch - leitend
 function bb_tech_electroconductive(values) {
-  if (values.XXX == null) return null;
+  var propertyValue = values.electroconductive;
 
-  switch (true) {
-    case values.XXX < 50:
-      return 0;
-    case values.XXX < 100:
-      return 0.3;
-    case values.XXX < 500:
-      return 0.5;
-    case values.XXX < 1000:
-      return 0.7;
-    default:
-      return 1;
-  }
+  if (propertyValue == null) return null;
+
+  if (propertyValue === true) return 0.35;
+  else return 1.0;
 }
 // Feuchtigkeit
 function bb_tech_moisture(values) {
-  if (values.XXX == null) return null;
+  var propertyValue = values.moisture;
 
-  switch (true) {
-    case values.XXX < 50:
-      return 0;
-    case values.XXX < 100:
-      return 0.3;
-    case values.XXX < 500:
-      return 0.5;
-    case values.XXX < 1000:
-      return 0.7;
-    default:
-      return 1;
-  }
+  if (propertyValue == null) return null;
+
+  if (propertyValue === true) return 0.35;
+  else return 1.0;
 }
 // Formgenauigkeit
 function bb_tech_shapeAccuracy(values) {
-  if (values.XXX == null) return null;
+  var propertyValue = values.shapeAccuracy;
 
-  switch (true) {
-    case values.XXX < 50:
-      return 0;
-    case values.XXX < 100:
-      return 0.3;
-    case values.XXX < 500:
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
+    case "Gering":
+      return 1.0;
+    case "Mittel":
       return 0.5;
-    case values.XXX < 1000:
-      return 0.7;
+    case "Hoch":
+      return 0.0;
     default:
-      return 1;
+      return 0.0;
   }
 }
 // Grundfarbe
 function bb_tech_basicColour(values) {
-  if (values.XXX == null) return null;
+  var propertyValue = values.basicColour;
 
-  switch (true) {
-    case values.XXX < 50:
-      return 0;
-    case values.XXX < 100:
-      return 0.3;
-    case values.XXX < 500:
-      return 0.5;
-    case values.XXX < 1000:
-      return 0.7;
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
+    case "Weiß":
+    case "Schwarz":
+    case "Blau":
+    case "Rot":
+    case "Gelb":
+      return 1.0;
+    case "Andere":
+      return 0.0;
     default:
-      return 1;
+      return 0.0;
   }
 }
 // Hitzebeständigkeit
 function bb_tech_heatResistance(values) {
-  if (values.heatResistance == null) return null;
-  if (values.heatResistance === true) return 0.35;
-  else return 1;
+  var propertyValue = values.heatResistance;
+
+  if (propertyValue == null) return null;
+
+  if (propertyValue === true) return 0.35;
+  else return 1.0;
 }
 // Hygiene
 function bb_tech_hygiene(values) {
-  if (values.heatResistance == null) return null;
-  if (values.heatResistance === true) return 0.35;
-  else return 1;
+  var propertyValue = values.hygene;
+
+  if (propertyValue == null) return null;
+
+  if (propertyValue === true) return 0.35;
+  else return 1.0;
 }
 // Kältebeständigkeit
 function bb_tech_coldResistance(values) {
-  if (values.coldResistance == null) return null;
+  var propertyValue = values.coldResistance;
 
-  if (values.coldResistance === true) return 0.55;
-  else return 1;
+  if (propertyValue == null) return null;
+
+  if (propertyValue === true) return 0.35;
+  else return 1.0;
 }
 // Mechanisch (Art)
 function bb_tech_mechanicalForceType(values) {
-  if (values.surfaceQuality == null) return null;
+  var propertyValue = values.mechanicalForceType;
 
-  switch (values.surfaceQuality) {
-    case "rough":
-      return 1;
-    case "medium":
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
+    case "statisch":
+      return 1.0;
+    case "dynamisch":
       return 0.5;
-    case "smooth":
-      return 0.1;
+    default:
+      return 0.0;
   }
 }
 // Mechanisch (Intensität)
 function bb_tech_mechanicalForceIntensity(values) {
-  if (values.surfaceQuality == null) return null;
+  var propertyValue = values.mechanicalForceIntensity;
 
-  switch (values.surfaceQuality) {
-    case "rough":
-      return 1;
-    case "medium":
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
+    case "Gering":
+      return 1.0;
+    case "Mittel":
       return 0.5;
-    case "smooth":
-      return 0.1;
+    case "Hoch":
+      return 0.0;
+    default:
+      return 0.0;
   }
 }
 // Oberfläche
 function bb_tech_surface(values) {
-  if (values.surfaceQuality == null) return null;
+  var propertyValue = values.surface;
 
-  switch (values.surfaceQuality) {
-    case "rough":
-      return 1;
-    case "medium":
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
+    case "Rau":
+      return 1.0;
+    case "Normal":
       return 0.5;
-    case "smooth":
-      return 0.1;
+    case "Glatt/Glänzend":
+      return 0.0;
+    default:
+      return 0.0;
   }
 }
 // Originalwerkstoff
 function bb_tech_originalMaterial(values) {
-  if (values.material == null) return null;
-  //return getEnumSurfaceQualityValue(values, "enumSurfaceQuality");
-  switch (values.material) {
+  var propertyValue = values.originalMaterial;
+
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
     case "ABS":
     case "PA6":
     case "PA11":
     case "PA12":
     case "TPE":
     case "AISI 304":
-      return 1;
+      return 1.0;
     case "PA6 + 30%GF":
       return 0.8;
     case "AISI 302":
@@ -463,32 +472,43 @@ function bb_tech_originalMaterial(values) {
       return 0.5;
     case "Grey cast iron":
       return 0.3;
+    default:
+      return 0.0;
   }
 }
 // Sichtteil
 function bb_tech_visiblePart(values) {
-  if (values.partVisible == null) return null;
-  if (values.partVisible === true) return 0.33;
-  if (values.partVisible === false) return 1;
+  var propertyValue = values.visiblePart;
+
+  if (propertyValue == null) return null;
+
+  if (propertyValue === true) return 0.35;
+  else return 1.0;
 }
 // UV-Beständigkeit
 function bb_tech_uvResistance(values) {
-  if (values.coldResistance == null) return null;
+  var propertyValue = values.uvResistance;
 
-  if (values.coldResistance === true) return 0.55;
-  else return 1;
+  if (propertyValue == null) return null;
+
+  if (propertyValue === true) return 0.35;
+  else return 1.0;
 }
-// Werkstoff
+// Werkstoffklasse
 function bb_tech_material(values) {
-  if (values.surfaceQuality == null) return null;
+  var propertyValue = values.material;
 
-  switch (values.surfaceQuality) {
-    case "rough":
-      return 1;
-    case "medium":
-      return 0.5;
-    case "smooth":
-      return 0.1;
+  if (propertyValue == null) return null;
+
+  switch (propertyValue) {
+    case "Kunstoff":
+      return 1.0;
+    case "Metall":
+      return 1.0;
+    case "Sonstiges":
+      return 0.0;
+    default:
+      return 0.0;
   }
 }
 
@@ -520,8 +540,6 @@ function technological(values) {
     bb_tech_size,
     bb_tech_originalMaterial,
     bb_tech_visiblePart,
-    bb_tech_surfaceQuality,
-    bb_tech_tolerances,
     bb_tech_uniColor,
     bb_tech_heatResistance,
     bb_tech_coldResistance
