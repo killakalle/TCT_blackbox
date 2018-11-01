@@ -239,21 +239,31 @@ function bb_econ_sicherheitsrelevanz(values) {
   if (propertyValue === true) return 0.35;
   else return 1.0;
 }
-// Stückzahl
-function bb_econ_stueckzahl(values) {
-  let propertyValue = variables.custom.stueckzahl;
+// Anzahl
+function bb_econ_anzahl(values) {
+  const choices = {
+    "kleinerGleich10": "8c862601-9eaa-4f33-bc4d-1501babd70f6",
+    "kleinerGleich50": "b80e477a-ecd2-4e7b-97b3-1396e298c906",
+    "kleinerGleich100": "b8b0a49f-e344-4b6d-9c40-b9ea5fe427a1",
+    "kleinerGleich500": "d2e1243e-b883-4dc5-a8f2-3f12994a1135",
+    "groesser500": "86deb913-2582-4e7c-99e1-46a4a8a4f4c4"
+  };
+  
+  let propertyValue = variables.custom.anzahl;
 
   if (propertyValue === null) return null;
 
-  switch (true) {
-    case propertyValue < 10:
+  switch (propertyValue) {
+    case choices.kleinerGleich10:
       return 1.0;
-    case propertyValue < 100:
-      return 0.7;
-    case propertyValue < 500:
-      return 0.5;
-    case propertyValue < 1000:
+    case choices.kleinerGleich50:
+      return 0.9;
+    case choices.kleinerGleich100:
+      return 0.6;
+    case choices.kleinerGleich500:
       return 0.3;
+    case choices.groesser500:
+      return 0.0;
     default:
       return null;
   }
@@ -493,9 +503,9 @@ function bb_tech_mechanischArt(values) {
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case choices.statisch:
+    case choices.Statisch:
       return 1.0;
-    case choices.dynamisch:
+    case choices.Dynamisch:
       return 0.5;
     default:
       return null;
@@ -706,15 +716,15 @@ function technological(values) {
 
 function economical_weighted(values) {
   const blackboxes = [
-    { weight: 0.5, id: "uuid" }, // Bauteilkomplexität
-    { weight: 0.5, id: "uuid" }, // Derzeitige / alte Lieferzeiten
-    { weight: 0.5, id: "uuid" }, // Derzeitige / alte Stückkosten
-    { weight: 0.5, id: "uuid" }, // Derzeitige Mindestabnahmemenge
-    { weight: 0, id: "uuid" }, // Frequenz
-    { weight: 0.5, id: "uuid" }, // Herkömmliche Fertigung
-    { weight: 0.5, id: "uuid" }, // Sicherheitsrelevanz
-    { weight: 0.5, id: "uuid" }, // Stückzahl
-    { weight: 0.5, id: "uuid" } // Verfügbarkeitssteigerung möglich um
+    { weight: 1, id: "1e77d4b9-64fe-432d-9dc3-c0ca68f843c4" }, // Bauteilkomplexität
+    { weight: 0.2, id: "68510897-3592-40eb-8b66-d857eec1689f" }, // Derzeitige / alte Lieferzeiten
+    { weight: 1, id: "96a27283-09b2-43be-a943-22377fe1cbc8" }, // Derzeitige / alte Stückkosten
+    { weight: 0.2, id: "466bfbbf-1486-48ed-8690-372b90505647" }, // Derzeitige Mindestabnahmemenge
+    { weight: 0, id: "68fb0d78-5adb-4b0c-8501-0d20f4b89ddc" }, // Frequenz
+    { weight: 0.1, id: "1ef46287-ac63-437e-a61e-12e980c62737" }, // Herkömmliche Fertigung
+    { weight: 0.7, id: "03b452e7-1b1d-42fa-93ce-0b67b8603b85" }, // Sicherheitsrelevanz
+    { weight: 0.8, id: "a57e1380-403e-4bee-a67a-f3751af2492f" }, // Anzahl
+    { weight: 0.3, id: "3a5c8ed9-1cc2-4044-a9fc-a819c71619bd" } // Verfügbarkeitssteigerung möglich um
   ];
 
   let score = 0;
@@ -731,43 +741,34 @@ function economical_weighted(values) {
   let result = score / weightsum;
   let certainty = weightsum / weighttotal;
   return {
-    result: result,
-    certainty: certainty,
-    name: "Econ"
+    "result": result,
+    "certainty": certainty,
+    "name": "Econ"
   };
 }
 
 function technological_weighted(values) {
   const blackboxes = [
-    { weight: 0.5, id: "uuid" }, // Bauteilkomplexität
-    { weight: 0.5, id: "uuid" }, // Derzeitige / alte Lieferzeiten
-    { weight: 0.5, id: "uuid" }, // Derzeitige / alte Stückkosten
-    { weight: 0.5, id: "uuid" }, // Derzeitige Mindestabnahmemenge
-    { weight: 0, id: "uuid" }, // Frequenz
-    { weight: 0.5, id: "uuid" }, // Herkömmliche Fertigung
-    { weight: 0.5, id: "uuid" }, // Sicherheitsrelevanz
-    { weight: 0.5, id: "uuid" }, // Stückzahl
-    { weight: 0.5, id: "uuid" }, // Verfügbarkeitssteigerung möglich um
-    { weight: 0.5, id: "uuid" }, // Außenbereich?
-    { weight: 0.5, id: "uuid" }, // Brandschutzanforderungen
-    { weight: 0.5, id: "uuid" }, // Größe
-    { weight: 0.5, id: "uuid" }, // Chemische Beständigkeit
-    { weight: 0.5, id: "uuid" }, // Ein- oder mehrfarbig
-    { weight: 0.5, id: "uuid" }, // Elektrisch - isolierend
-    { weight: 0.5, id: "uuid" }, // Elektrisch - leitend
-    { weight: 0.5, id: "uuid" }, // Feuchtigkeit
-    { weight: 0.5, id: "uuid" }, // Formgenauigkeit
-    { weight: 0.5, id: "uuid" }, // Grundfarbe
-    { weight: 0.5, id: "uuid" }, // Hitzebeständigkeit
-    { weight: 0.5, id: "uuid" }, // Hygiene
-    { weight: 0.5, id: "uuid" }, // Kältebeständigkeit
-    { weight: 0.5, id: "uuid" }, // Mechanisch (Art)
-    { weight: 0.5, id: "uuid" }, // Mechanisch (Intensität)
-    { weight: 0.5, id: "uuid" }, // Oberfläche
-    // { weight: 0, id: "uuid" }, // Originalwerkstoff
-    { weight: 0.5, id: "uuid" }, // Sichtteil
-    { weight: 0.5, id: "uuid" }, // UV-Beständigkeit
-    { weight: 0.5, id: "uuid" } // Werkstoff
+    { weight: 0.05, id: "2a9973d2-e0e0-4604-b040-0833cda76d78" }, // Außenbereich?
+    { weight: 0.3, id: "c40939c0-d93a-464f-b124-3ba6b64b205d" }, // Brandschutzanforderungen
+    { weight: 1.0, id: "291b1636-6760-4707-b442-0ae6ff4f8a5b" }, // Größe
+    { weight: 0.2, id: "23285e56-7dff-4f2e-b8fb-933fcaf4056b" }, // Chemische Beständigkeit
+    { weight: 0.8, id: "91597806-44d2-414c-ac88-fb5399de0d89" }, // Ein- oder mehrfarbig
+    { weight: 0.2, id: "150e9659-be5a-4bf2-9233-f1e4f163fda9" }, // Elektrisch - isolierend
+    { weight: 0.2, id: "cd7065a4-507a-43fc-97d6-cb9cc72bcbcd" }, // Elektrisch - leitend
+    { weight: 0.3, id: "bb3c0364-f1e4-400f-9f6f-34932de462b7" }, // Feuchtigkeit
+    { weight: 0.7, id: "3593ea61-f544-44ef-aa7c-eced0bac5208" }, // Formgenauigkeit
+    { weight: 0.2, id: "84f633f4-64ae-48d0-9672-f0df5325bc28" }, // Grundfarbe
+    { weight: 0.3, id: "5cc63934-b0f9-403f-be9b-dc85815a1b7e" }, // Hitzebeständigkeit    
+    { weight: 0.6, id: "1b28e6bf-8747-4c1e-a5a3-66800283cac8" }, // Hygiene
+    { weight: 0.2, id: "d3273b94-52ea-478d-8937-cbf1805d6601" }, // Kältebeständigkeit
+    { weight: 0.5, id: "bd8802b6-2765-4fcb-adfc-692a32baeb2d" }, // Mechanisch (Art)
+    { weight: 0.5, id: "5901a905-a27d-4fce-8299-be1bcf20076e" }, // Mechanisch (Intensität)
+    { weight: 0.7, id: "0ddb6280-f709-45d8-a121-ef7867eefab6" }, // Oberfläche
+//    { weight: 0, id: "uuid" }, // Originalwerkstoff
+    { weight: 0.9, id: "1e852628-959c-443c-90cc-0bfb8baff932" }, // Sichtteil
+    { weight: 0.1, id: "613f3a11-3dee-40d7-9dd8-94a5dee521c0" }, // UV-Beständigkeit
+    { weight: 0.8, id: "1dd59e55-aa95-4330-8f97-1aacfdefc8d7" } // Werkstoff
   ];
 
   let score = 0;
@@ -784,9 +785,9 @@ function technological_weighted(values) {
   let result = score / weightsum;
   let certainty = weightsum / weighttotal;
   return {
-    result: result,
-    certainty: certainty,
-    name: "Tech"
+    "result": result,
+    "certainty": certainty,
+    "name": "Tech"
   };
 }
 
