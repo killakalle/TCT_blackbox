@@ -1,3 +1,5 @@
+const variables
+
 const parts = [
   {
     name: "Best Part",
@@ -5,33 +7,33 @@ const parts = [
       complexity: "Gering",
       supplyLeadTime: 25,
       partPrice: 150,
-      minOrderQuantity: 100,
+      minOrderstueckzahl: 100,
       frequency: "Jährlich",
-      traditionalManufacturing: "Spritzgießen",
-      safetyRelevance: true,
-      quantity: 250,
-      availabilityImprovement: "sechs Monate",
+      herkoemmlicheFertigung: "Spritzgießen",
+      sicherheitsrelevanz: true,
+      stueckzahl: 250,
+      verfuegbarkeitssteigerung: "sechs Monate",
       outsideArea: "Innenbereich",
-      fireSafety: false,
+      brandschutzanforderungen: false,
       size_b: 25,
-      chemicalResistance: true,
-      uniColor: "mehrfarbig",
-      electricIsolation: true,
-      electroconductive: null,
-      moisture: null,
-      shapeAccuracy: "Mittel",
-      basicColour: "Schwarz",
-      heatResistance: null,
+      chemischeBestaendigkeit: true,
+      einOderMehrfarbig: "mehrfarbig",
+      elektrischIsolierend: true,
+      elektrischLeitend: null,
+      feuchtigkeit: null,
+      formgenauigkeit: "Mittel",
+      grundfarbe: "Schwarz",
+      hitzebestaendigkeit: null,
       size_h: 144,
       hygiene: true,
-      coldResistance: true,
+      kaeltebestaendigkeit: true,
       size_l: 122,
-      mechanicalForceType: "dynamisch",
-      mechanicalForceIntensity: "Mittel",
-      surface: "Glatt/Glänzend",
-      visiblePart: true,
-      uvResistance: true,
-      material: "Metall"
+      mechanischArt: "dynamisch",
+      mechanischIntensitaet: "Mittel",
+      oberflaeche: "Glatt/Glänzend",
+      sichtteil: true,
+      uvBestaendigkeit: true,
+      werkstoffklasse: "Metall"
     }
   },
   {
@@ -40,33 +42,33 @@ const parts = [
       complexity: "Mittel",
       supplyLeadTime: 1225,
       partPrice: 1150,
-      minOrderQuantity: 100,
+      minOrderstueckzahl: 100,
       frequency: "Jährlich",
-      traditionalManufacturing: "Spritzgießen",
-      safetyRelevance: true,
-      quantity: 250,
-      availabilityImprovement: "sechs Monate",
+      herkoemmlicheFertigung: "Spritzgießen",
+      sicherheitsrelevanz: true,
+      stueckzahl: 250,
+      verfuegbarkeitssteigerung: "sechs Monate",
       outsideArea: "Innenbereich",
-      fireSafety: true,
+      brandschutzanforderungen: true,
       size_b: 225,
-      chemicalResistance: true,
-      uniColor: "mehrfarbig",
-      electricIsolation: true,
-      electroconductive: null,
-      moisture: true,
-      shapeAccuracy: "Mittel",
-      basicColour: "Schwarz",
-      heatResistance: null,
+      chemischeBestaendigkeit: true,
+      einOderMehrfarbig: "mehrfarbig",
+      elektrischIsolierend: true,
+      elektrischLeitend: null,
+      feuchtigkeit: true,
+      formgenauigkeit: "Mittel",
+      grundfarbe: "Schwarz",
+      hitzebestaendigkeit: null,
       size_h: 144,
       hygiene: true,
-      coldResistance: true,
+      kaeltebestaendigkeit: true,
       size_l: 122,
-      mechanicalForceType: "dynamisch",
-      mechanicalForceIntensity: "Mittel",
-      surface: null,
-      visiblePart: true,
-      uvResistance: true,
-      material: "Metall"
+      mechanischArt: "dynamisch",
+      mechanischIntensitaet: "Mittel",
+      oberflaeche: null,
+      sichtteil: true,
+      uvBestaendigkeit: true,
+      werkstoffklasse: "Metall"
     }
   }
   // {
@@ -74,19 +76,19 @@ const parts = [
   //   values: {
   //     price: 20,
   //     demand: 1003,
-  //     minOrderQuantity: 1001,
+  //     minOrderstueckzahl: 1001,
   //     supplyLeadTime: "within 90 days",
   //     qualification: true,
   //     size_l: 120,
   //     size_w: 9000,
   //     size_h: 201,
-  //     material: "Grey cast iron",
+  //     werkstoffklasse: "Grey cast iron",
   //     partVisible: true,
-  //     surfaceQuality: "smooth",
+  //     oberflaecheQuality: "smooth",
   //     tolerances: "0.1 mm",
-  //     color: "unicolor",
-  //     heatResistance: true,
-  //     coldResistance: false
+  //     color: "einOderMehrfarbig",
+  //     hitzebestaendigkeit: true,
+  //     kaeltebestaendigkeit: false
   //   }
   // }
 ];
@@ -97,25 +99,31 @@ const parts = [
 // Econ score blackoxes //
 
 // Bauteilkomplexität
-function bb_econ_complexity(values) {
-  var propertyValue = values.complexity;
+function bb_econ_bauteilkomplexitaet(values) {
+  const choices = { //Bauteilkomplexität
+    Gering: "4257b5f9-bbc8-4d8f-acea-2770ef7f4be3",
+    Mittel: "b9def269-7811-4b04-bb92-35bb0e62d409",
+    Hoch: "70594939-e8df-4b92-ab67-5fe94f4f82c9"
+  };
+  
+  let propertyValue = variables.custom.bauteilkomplexitaet;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "Gering":
+    case choices.Gering:
       return 0.0;
-    case "Mittel":
+    case choices.Mittel:
       return 0.5;
-    case "Hoch":
+    case choices.Hoch:
       return 1.0;
     default:
       return null;
   }
 }
 // Derzeitige / alte Lieferzeiten
-function bb_econ_supplyLeadTime(values) {
-  var propertyValue = values.supplyLeadTime;
+function bb_econ_derzeitigeAlteLieferzeiten(values) {
+  let propertyValue = variables.custom.derzeitigeAlteLieferzeiten;
 
   if (propertyValue === null) return null;
 
@@ -131,8 +139,8 @@ function bb_econ_supplyLeadTime(values) {
   }
 }
 // Derzeitige / alte Stückkosten
-function bb_econ_partPrice(values) {
-  var propertyValue = values.partPrice;
+function bb_econ_derzeitigeAlteStueckkosten(values) {
+  let propertyValue = variables.custom.derzeitigeAlteStueckkosten;
 
   if (propertyValue === null) return null;
 
@@ -154,8 +162,8 @@ function bb_econ_partPrice(values) {
   }
 }
 // Derzeitige Mindestabnahmemenge
-function bb_econ_minOrderQuantity(values) {
-  var propertyValue = values.minOrderQuantity;
+function bb_econ_derzeitigeMindestabnahmemenge(values) {
+  let propertyValue = variables.custom.derzeitigeMindestabnahmemenge;
 
   if (propertyValue === null) return null;
 
@@ -177,42 +185,54 @@ function bb_econ_minOrderQuantity(values) {
   }
 }
 // Frequenz
-function bb_econ_frequency(values) {
-  var propertyValue = values.frequency;
+function bb_econ_frequenz(values) {
+  const choices = {
+    Jährlich: "00d92b53-ebf1-4d3f-92f0-9e8cdd0f1cde",
+    Einmalig: "ae7270c2-d432-4a46-91ca-3fd5fee8e232"
+  };
+
+  let propertyValue = variables.custom.frequenz;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "Jährlich":
+    case choices.Jährlich:
       return 0.8;
-    case "Einmalig":
+    case choices.Einmalig:
       return 1.0;
     default:
       return null;
   }
 }
 // Herkömmliche Fertigung
-function bb_econ_traditionalManufacturing(values) {
-  var propertyValue = values.traditionalManufacturing;
+function bb_econ_herkoemmlicheFertigung(values) {
+  const choices = {
+    Drehen: "746bc852-ed2d-425b-b7be-3955cb1c1e8e",
+    Fräsen: "6c3af925-880a-4d33-ab17-495973749244",
+    Gießen: "c7df08ab-a2c8-4ddc-b247-42871d21ca0d",
+    Spritzgießen: "4d63f587-d988-4cf9-8f6a-819643bae4bc"
+  };
+
+  let propertyValue = variables.custom.herkoemmlicheFertigung;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "Drehen":
+    case choices.Drehen:
       return 0.3;
-    case "Fräsen":
+    case choices.Fräsen:
       return 0.5;
-    case "Gießen":
+    case choices.Gießen:
       return 0.8;
-    case "Spritzgießen":
+    case choices.Spritzgießen:
       return 1.0;
     default:
       return null;
   }
 }
 // Sicherheitsrelevanz
-function bb_econ_safetyRelevance(values) {
-  var propertyValue = values.safetyRelevance;
+function bb_econ_sicherheitsrelevanz(values) {
+  let propertyValue = variables.custom.sicherheitsrelevanz;
 
   if (propertyValue === null) return null;
 
@@ -220,8 +240,8 @@ function bb_econ_safetyRelevance(values) {
   else return 1.0;
 }
 // Stückzahl
-function bb_econ_quantity(values) {
-  var propertyValue = values.quantity;
+function bb_econ_stueckzahl(values) {
+  let propertyValue = variables.custom.stueckzahl;
 
   if (propertyValue === null) return null;
 
@@ -239,19 +259,26 @@ function bb_econ_quantity(values) {
   }
 }
 // Verfügbarkeitssteigerung möglich um
-function bb_econ_availabilityImprovement(values) {
-  var propertyValue = values.availabilityImprovement;
+function bb_econ_verfuegbarkeitssteigerung(values) {
+  const choices = {
+    "einenMonat": "7a58ee10-eaf8-4021-b9a8-324dde733dad",
+    "dreiMonate": "14a9d39a-ef7b-41ff-ac8a-34c56864a554",
+    "sechsMonate": "56ab521a-7868-4c64-9a33-8d5bab0a1fc6",
+    "einJahr": "314739a2-b47a-4860-80cd-0b8034ec7484"
+  };
+
+  let propertyValue = variables.custom.verfuegbarkeitssteigerung;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "einen Monat":
+    case choices.einenMonat:
       return 0.0;
-    case "drei Monate":
+    case choices.dreiMonate:
       return 0.5;
-    case "sechs Monate":
+    case choices.sechsMonate:
       return 0.7;
-    case "ein Jahr":
+    case choices.einJahr:
       return 1.0;
     default:
       return null;
@@ -261,23 +288,28 @@ function bb_econ_availabilityImprovement(values) {
 // Tech score blackoxes //
 
 // Außenbereich?
-function bb_tech_outsideArea(values) {
-  var propertyValue = values.outsideArea;
+function bb_tech_aussenbereich(values) {
+  const choices = {
+    Innenbereich: "6908f92d-8950-4c6f-b97d-d010962ab799",
+    Außenbereich: "c4ee219d-aa17-49a2-9743-bb6f04e44859"
+  };
+  
+  let propertyValue = variables.custom.aussenbereich;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "Innenbereich":
+    case choices.Innenbereich:
       return 1.0;
-    case "Außenbereich":
+    case choices.Außenbereich:
       return 0.5;
     default:
       return null;
   }
 }
 // Brandschutzanforderungen
-function bb_tech_fireSafety(values) {
-  var propertyValue = values.fireSafety;
+function bb_tech_brandschutzanforderungen(values) {
+  let propertyValue = variables.custom.brandschutzanforderungen;
 
   if (propertyValue === null) return null;
 
@@ -285,19 +317,19 @@ function bb_tech_fireSafety(values) {
   else return 1.0;
 }
 // Größe (Länge, Breite, Höhe)
-function bb_tech_size(values) {
-  var propertyValue_l = values.size_l;
-  var propertyValue_b = values.size_b;
-  var propertyValue_h = values.size_h;
+function bb_tech_groesse(values) {
+  let propertyValue_l = variables.custom.laenge;
+  let propertyValue_b = variables.custom.breite;
+  let propertyValue_h = variables.custom.hoehe;
 
   if (
     propertyValue_l === null ||
     propertyValue_b === null ||
-    values.size_h === null
+    propertyValue_h === null
   )
     return null;
 
-  var size;
+  let size;
   size = propertyValue_l * propertyValue_b * propertyValue_h;
 
   switch (true) {
@@ -316,8 +348,8 @@ function bb_tech_size(values) {
   }
 }
 // Chemische Beständigkeit
-function bb_tech_chemicalResistance(values) {
-  var propertyValue = values.chemicalResistance;
+function bb_tech_chemischeBestaendigkeit(values) {
+  let propertyValue = variables.custom.chemischeBestaendigkeit;
 
   if (propertyValue === null) return null;
 
@@ -325,23 +357,28 @@ function bb_tech_chemicalResistance(values) {
   else return 1.0;
 }
 // Ein- oder mehrfarbig
-function bb_tech_uniColor(values) {
-  var propertyValue = values.uniColor;
+function bb_tech_einOderMehrfarbig(values) {
+  const choices = {
+    Einfarbig: "5bb7d3a8-9cf7-406d-b023-80138bce1985",
+    Mehrfarbig: "e499df01-e1d5-4735-957b-21070fcbef37"
+  };
+  
+  let propertyValue = variables.custom.einOderMehrfarbig;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "unicolor":
+    case choices.Einfarbig:
       return 1.0;
-    case "multi color":
+    case choices.Mehrfarbig:
       return 0.4;
     default:
       return null;
   }
 }
 // Elektrisch - isolierend
-function bb_tech_electricIsolation(values) {
-  var propertyValue = values.electricIsolation;
+function bb_tech_elektrischIsolierend(values) {
+  let propertyValue = variables.custom.elektrischIsolierend;
 
   if (propertyValue === null) return null;
 
@@ -349,8 +386,8 @@ function bb_tech_electricIsolation(values) {
   else return 1.0;
 }
 // Elektrisch - leitend
-function bb_tech_electroconductive(values) {
-  var propertyValue = values.electroconductive;
+function bb_tech_elektrischLeitend(values) {
+  let propertyValue = variables.custom.elektrischLeitend;
 
   if (propertyValue === null) return null;
 
@@ -358,8 +395,8 @@ function bb_tech_electroconductive(values) {
   else return 1.0;
 }
 // Feuchtigkeit
-function bb_tech_moisture(values) {
-  var propertyValue = values.moisture;
+function bb_tech_feuchtigkeit(values) {
+  let propertyValue = variables.custom.feuchtigkeit;
 
   if (propertyValue === null) return null;
 
@@ -367,44 +404,59 @@ function bb_tech_moisture(values) {
   else return 1.0;
 }
 // Formgenauigkeit
-function bb_tech_shapeAccuracy(values) {
-  var propertyValue = values.shapeAccuracy;
+function bb_tech_formgenauigkeit(values) {
+  const choices = {
+    Gering: "57ebd841-b7cd-4bf6-8b61-ac5a67f3da8f",
+    Mittel: "8a3dff90-67b2-4bcb-aea2-54e094b704d8",
+    Hoch: "bd3d125c-5a2c-4bb7-b2cc-ebcbb45d882b"
+  };
+
+  let propertyValue = variables.custom.formgenauigkeit;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "Gering":
+    case choices.Gering:
       return 1.0;
-    case "Mittel":
+    case choices.Mittel:
       return 0.5;
-    case "Hoch":
+    case choices.Hoch:
       return 0.0;
     default:
       return null;
   }
 }
 // Grundfarbe
-function bb_tech_basicColour(values) {
-  var propertyValue = values.basicColour;
+function bb_tech_grundfarbe(values) {
+  const choices = {
+    Weiß: "4a1a7376-31ca-40b9-ad0e-58e12da0d4c5",
+    Schwarz: "6aeab352-86c6-412b-be95-823be3ff39f9",
+    Blau: "b1a4fcc1-5a4c-412e-a7d2-19a81e695fde",
+    Rot: "a6a95b8f-d30f-40a6-bad7-79043b3b6890",
+    Gelb: "7efdb53a-79ec-4ba9-983b-7b8c6bc057a4",
+    Andere: "0940772d-25d7-462e-bfd9-a31ceedf151b"
+  };
+  
+  let propertyValue = variables.custom.grundfarbe;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "Weiß":
-    case "Schwarz":
-    case "Blau":
-    case "Rot":
-    case "Gelb":
+    case choices.Weiß:
+    case choices.Schwarz:
+    case choices.Blau:
+    case choices.Rot:
+    case choices.Gelb:
       return 1.0;
-    case "Andere":
+    case choices.Andere:
       return 0.0;
     default:
       return null;
   }
 }
 // Hitzebeständigkeit
-function bb_tech_heatResistance(values) {
-  var propertyValue = values.heatResistance;
+function bb_tech_hitzebestaendigkeit(values) {
+  let propertyValue = variables.custom.hitzebestaendigkeit;
 
   if (propertyValue === null) return null;
 
@@ -413,7 +465,7 @@ function bb_tech_heatResistance(values) {
 }
 // Hygiene
 function bb_tech_hygiene(values) {
-  var propertyValue = values.hygene;
+  let propertyValue = variables.custom.hyigene;
 
   if (propertyValue === null) return null;
 
@@ -421,8 +473,8 @@ function bb_tech_hygiene(values) {
   else return 1.0;
 }
 // Kältebeständigkeit
-function bb_tech_coldResistance(values) {
-  var propertyValue = values.coldResistance;
+function bb_tech_kaeltebestaendigkeit(values) {
+  let propertyValue = variables.custom.kaeltebestaendigkeit;
 
   if (propertyValue === null) return null;
 
@@ -430,57 +482,74 @@ function bb_tech_coldResistance(values) {
   else return 1.0;
 }
 // Mechanisch (Art)
-function bb_tech_mechanicalForceType(values) {
-  var propertyValue = values.mechanicalForceType;
+function bb_tech_mechanischArt(values) {
+  const choices = {
+    Statisch: "5ffeab77-529a-47b5-9c04-19d4961f4213",
+    Dynamisch: "bbe5b02d-a2d5-489b-9bac-d4506bb01913"
+  };
+  
+  let propertyValue = variables.custom.mechanischArt;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "statisch":
+    case choices.statisch:
       return 1.0;
-    case "dynamisch":
+    case choices.dynamisch:
       return 0.5;
     default:
       return null;
   }
 }
 // Mechanisch (Intensität)
-function bb_tech_mechanicalForceIntensity(values) {
-  var propertyValue = values.mechanicalForceIntensity;
+function bb_tech_mechanischIntensitaet(values) {
+  const choices = {
+    Gering: "20ffe30e-8712-4767-b694-d8ec6966d161",
+    Mittel: "7e8873dd-b5a6-4bbb-a43e-9113d41ea311",
+    Hoch: "2a561c58-d643-4d7e-810b-68e009ab791d"
+  };
+  
+  let propertyValue = variables.custom.mechanischIntensitaet;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "Gering":
+    case choices.Gering:
       return 1.0;
-    case "Mittel":
+    case choices.Mittel:
       return 0.5;
-    case "Hoch":
+    case choices.Hoch:
       return 0.0;
     default:
       return null;
   }
 }
 // Oberfläche
-function bb_tech_surface(values) {
-  var propertyValue = values.surface;
+function bb_tech_oberflaeche(values) {
+  const choices = {
+    Rau: "b1913e06-2a33-4fb1-993e-15921434b3e0",
+    Normal: "e299ad9c-1b64-450f-860c-a8e3d1c0dbf4",
+    GlattGlänzend: "eee8f9eb-75f1-4019-9d60-7d1a7cbcddb9"
+  };
+  
+  let propertyValue = variables.custom.oberflaeche;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "Rau":
+    case choices.Rau:
       return 1.0;
-    case "Normal":
+    case choices.Normal:
       return 0.5;
-    case "Glatt/Glänzend":
+    case choices.GlattGlänzend:
       return 0.0;
     default:
       return null;
   }
 }
 // Originalwerkstoff
-// function bb_tech_originalMaterial(values) {
-//   var propertyValue = values.originalMaterial;
+// function bb_tech_originalwerkstoffklasse(values) {
+//   let propertyValue = variables.custom.originalwerkstoffklasse;
 
 //   if (propertyValue === null) return null;
 
@@ -507,8 +576,8 @@ function bb_tech_surface(values) {
 //   }
 // }
 // Sichtteil
-function bb_tech_visiblePart(values) {
-  var propertyValue = values.visiblePart;
+function bb_tech_sichtteil(values) {
+  let propertyValue = variables.custom.sichtteil;
 
   if (propertyValue === null) return null;
 
@@ -516,8 +585,8 @@ function bb_tech_visiblePart(values) {
   else return 1.0;
 }
 // UV-Beständigkeit
-function bb_tech_uvResistance(values) {
-  var propertyValue = values.uvResistance;
+function bb_tech_uvBestaendigkeit(values) {
+  let propertyValue = variables.custom.uvBestaendigkeit;
 
   if (propertyValue === null) return null;
 
@@ -525,17 +594,23 @@ function bb_tech_uvResistance(values) {
   else return 1.0;
 }
 // Werkstoffklasse
-function bb_tech_material(values) {
-  var propertyValue = values.material;
+function bb_tech_werkstoffklasse(values) {
+  const choices = {
+    Kunstoff: "c51432ae-c89c-4027-9361-1cd383c7fc4e",
+    Metall: "62bebdcf-d0c4-4396-ab78-952dda5a57a9",
+    Sonstiges: "026055d6-81d2-4f94-b37c-835b7580fa78"
+  };
+  
+  let propertyValue = variables.custom.werkstoffklasse;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case "Kunstoff":
+    case choices.Kunstoff:
       return 1.0;
-    case "Metall":
+    case choices.Metall:
       return 1.0;
-    case "Sonstiges":
+    case choices.Sonstiges:
       return 0.0;
     default:
       return null;
@@ -544,23 +619,23 @@ function bb_tech_material(values) {
 
 // scores
 function economical(values) {
-  var score_econ = 0;
+  let score_econ = 0;
 
-  var blackboxes_econ = [
+  let blackboxes_econ = [
     bb_econ_complexity,
     bb_econ_supplyLeadTime,
     bb_econ_partPrice,
-    bb_econ_minOrderQuantity,
+    bb_econ_minOrderstueckzahl,
     bb_econ_frequency,
-    bb_econ_traditionalManufacturing,
-    bb_econ_safetyRelevance,
-    bb_econ_quantity,
-    bb_econ_availabilityImprovement
+    bb_econ_herkoemmlicheFertigung,
+    bb_econ_sicherheitsrelevanz,
+    bb_econ_stueckzahl,
+    bb_econ_verfuegbarkeitssteigerung
   ];
 
-  var countNull = 0;
-  var bbRes;
-  for (var i = 0; i < blackboxes_econ.length; i++) {
+  let countNull = 0;
+  let bbRes;
+  for (let i = 0; i < blackboxes_econ.length; i++) {
     bbRes = blackboxes_econ[i](values);
     if (bbRes === null) countNull++;
     else score_econ += blackboxes_econ[i](values);
@@ -570,57 +645,57 @@ function economical(values) {
 }
 function technological(values) {
   //  return getEnumValue(values, "enum");
-  var score_tech = 0;
+  let score_tech = 0;
 
-  var blackboxes_tech = [
-    bb_tech_outsideArea,
-    bb_tech_fireSafety,
+  let blackboxes_tech = [
+    bb_tech_aussenbereich,
+    bb_tech_brandschutzanforderungen,
     bb_tech_size,
-    bb_tech_chemicalResistance,
-    bb_tech_uniColor,
-    bb_tech_electricIsolation,
-    bb_tech_electroconductive,
-    bb_tech_moisture,
-    bb_tech_shapeAccuracy,
-    bb_tech_basicColour,
-    bb_tech_heatResistance,
+    bb_tech_chemischeBestaendigkeit,
+    bb_tech_einOderMehrfarbig,
+    bb_tech_elektrischIsolierend,
+    bb_tech_elektrischLeitend,
+    bb_tech_feuchtigkeit,
+    bb_tech_formgenauigkeit,
+    bb_tech_grundfarbe,
+    bb_tech_hitzebestaendigkeit,
     bb_tech_hygiene,
-    bb_tech_coldResistance,
-    bb_tech_mechanicalForceType,
-    bb_tech_mechanicalForceIntensity,
-    bb_tech_surface,
-    // bb_tech_originalMaterial,
-    bb_tech_visiblePart,
-    bb_tech_uvResistance,
-    bb_tech_material
+    bb_tech_kaeltebestaendigkeit,
+    bb_tech_mechanischArt,
+    bb_tech_mechanischIntensitaet,
+    bb_tech_oberflaeche,
+    // bb_tech_originalwerkstoffklasse,
+    bb_tech_sichtteil,
+    bb_tech_uvBestaendigkeit,
+    bb_tech_werkstoffklasse
   ];
 
   const weights_tech = {
-    bb_tech_outsideArea: 10,
-    bb_tech_fireSafety: 5,
+    bb_tech_aussenbereich: 10,
+    bb_tech_brandschutzanforderungen: 5,
     bb_tech_size: 100,
-    bb_tech_chemicalResistance: 20,
-    bb_tech_uniColor: 1,
-    bb_tech_electricIsolation: 1,
-    bb_tech_electroconductive: 1,
-    bb_tech_moisture: 1,
-    bb_tech_shapeAccuracy: 1,
-    bb_tech_basicColour: 1,
-    bb_tech_heatResistance: 1,
+    bb_tech_chemischeBestaendigkeit: 20,
+    bb_tech_einOderMehrfarbig: 1,
+    bb_tech_elektrischIsolierend: 1,
+    bb_tech_elektrischLeitend: 1,
+    bb_tech_feuchtigkeit: 1,
+    bb_tech_formgenauigkeit: 1,
+    bb_tech_grundfarbe: 1,
+    bb_tech_hitzebestaendigkeit: 1,
     bb_tech_hygiene: 1,
-    bb_tech_coldResistance: 1,
-    bb_tech_mechanicalForceType: 1,
-    bb_tech_mechanicalForceIntensity: 1,
-    bb_tech_surface: 1,
-    // bb_tech_originalMaterial,
-    bb_tech_visiblePart: 1,
-    bb_tech_uvResistance: 1,
-    bb_tech_material: 1
+    bb_tech_kaeltebestaendigkeit: 1,
+    bb_tech_mechanischArt: 1,
+    bb_tech_mechanischIntensitaet: 1,
+    bb_tech_oberflaeche: 1,
+    // bb_tech_originalwerkstoffklasse,
+    bb_tech_sichtteil: 1,
+    bb_tech_uvBestaendigkeit: 1,
+    bb_tech_werkstoffklasse: 1
   };
 
-  var countNull = 0;
-  var bbRes;
-  for (var i = 0; i < blackboxes_tech.length; i++) {
+  let countNull = 0;
+  let bbRes;
+  for (let i = 0; i < blackboxes_tech.length; i++) {
     bbRes = blackboxes_tech[i](values);
     if (bbRes === null) countNull++;
     else score_tech += blackboxes_tech[i](values);
@@ -629,26 +704,90 @@ function technological(values) {
   return score_tech / (blackboxes_tech.length - countNull);
 }
 
-function technological_weighted(values) {
+function economical_weighted(values) {
   const blackboxes = [
-    // bb_tech_outsideArea
-    { weight: 0.5, id: "uuid" },
-    // bb_tech_fireSafety
-    { weight: 0.5, id: "uuid" },
-    //bb_tech_size
-    { weight: 10, id: "uuid" }
+    { weight: 0.5, id: "uuid" }, // Bauteilkomplexität
+    { weight: 0.5, id: "uuid" }, // Derzeitige / alte Lieferzeiten
+    { weight: 0.5, id: "uuid" }, // Derzeitige / alte Stückkosten
+    { weight: 0.5, id: "uuid" }, // Derzeitige Mindestabnahmemenge
+    { weight: 0, id: "uuid" }, // Frequenz
+    { weight: 0.5, id: "uuid" }, // Herkömmliche Fertigung
+    { weight: 0.5, id: "uuid" }, // Sicherheitsrelevanz
+    { weight: 0.5, id: "uuid" }, // Stückzahl
+    { weight: 0.5, id: "uuid" } // Verfügbarkeitssteigerung möglich um
   ];
 
   let score = 0;
   let weightsum = 0;
+  let weighttotal = 0;
   for (const { id, weight } of blackboxes) {
-    const value = results[id];
+    const value = results[id]; // results will work in AMPI
     if (value !== null) {
       score += weight * value;
       weightsum += weight;
     }
+    weighttotal += weight;
   }
-  return score / weightsum;
+  let result = score / weightsum;
+  let certainty = weightsum / weighttotal;
+  return {
+    result: result,
+    certainty: certainty,
+    name: "Econ"
+  };
+}
+
+function technological_weighted(values) {
+  const blackboxes = [
+    { weight: 0.5, id: "uuid" }, // Bauteilkomplexität
+    { weight: 0.5, id: "uuid" }, // Derzeitige / alte Lieferzeiten
+    { weight: 0.5, id: "uuid" }, // Derzeitige / alte Stückkosten
+    { weight: 0.5, id: "uuid" }, // Derzeitige Mindestabnahmemenge
+    { weight: 0, id: "uuid" }, // Frequenz
+    { weight: 0.5, id: "uuid" }, // Herkömmliche Fertigung
+    { weight: 0.5, id: "uuid" }, // Sicherheitsrelevanz
+    { weight: 0.5, id: "uuid" }, // Stückzahl
+    { weight: 0.5, id: "uuid" }, // Verfügbarkeitssteigerung möglich um
+    { weight: 0.5, id: "uuid" }, // Außenbereich?
+    { weight: 0.5, id: "uuid" }, // Brandschutzanforderungen
+    { weight: 0.5, id: "uuid" }, // Größe
+    { weight: 0.5, id: "uuid" }, // Chemische Beständigkeit
+    { weight: 0.5, id: "uuid" }, // Ein- oder mehrfarbig
+    { weight: 0.5, id: "uuid" }, // Elektrisch - isolierend
+    { weight: 0.5, id: "uuid" }, // Elektrisch - leitend
+    { weight: 0.5, id: "uuid" }, // Feuchtigkeit
+    { weight: 0.5, id: "uuid" }, // Formgenauigkeit
+    { weight: 0.5, id: "uuid" }, // Grundfarbe
+    { weight: 0.5, id: "uuid" }, // Hitzebeständigkeit
+    { weight: 0.5, id: "uuid" }, // Hygiene
+    { weight: 0.5, id: "uuid" }, // Kältebeständigkeit
+    { weight: 0.5, id: "uuid" }, // Mechanisch (Art)
+    { weight: 0.5, id: "uuid" }, // Mechanisch (Intensität)
+    { weight: 0.5, id: "uuid" }, // Oberfläche
+    // { weight: 0, id: "uuid" }, // Originalwerkstoff
+    { weight: 0.5, id: "uuid" }, // Sichtteil
+    { weight: 0.5, id: "uuid" }, // UV-Beständigkeit
+    { weight: 0.5, id: "uuid" } // Werkstoff
+  ];
+
+  let score = 0;
+  let weightsum = 0;
+  let weighttotal = 0;
+  for (const { id, weight } of blackboxes) {
+    const value = results[id]; // results will work in AMPI
+    if (value !== null) {
+      score += weight * value;
+      weightsum += weight;
+    }
+    weighttotal += weight;
+  }
+  let result = score / weightsum;
+  let certainty = weightsum / weighttotal;
+  return {
+    result: result,
+    certainty: certainty,
+    name: "Tech"
+  };
 }
 
 // define score functions
