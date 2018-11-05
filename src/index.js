@@ -5,8 +5,8 @@ const variables
 
 // Econ score blackoxes //
 
-function bb_econ_annualDemand(values) {
-  let propertyValue = variables.custom.annualDemand;
+function bb_econ_stueckzahl(values) {
+  let propertyValue = variables.custom.stueckzahl;
 
   if (propertyValue === null) return null;
 
@@ -26,8 +26,8 @@ function bb_econ_annualDemand(values) {
   }
 }
 
-function bb_econ_currentPartPrice(values) {
-  let propertyValue = variables.custom.currentPartPrice;
+function bb_econ_stueckkosten(values) {
+  let propertyValue = variables.custom.stueckkosten;
 
   if (propertyValue === null) return null;
 
@@ -48,8 +48,8 @@ function bb_econ_currentPartPrice(values) {
       return null;
   }
 }
-function bb_econ_minOrderQuantity(values) {
-  let propertyValue = variables.custom.minOrderQuantity;
+function bb_econ_mindestbestellmenge(values) {
+  let propertyValue = variables.custom.mindestbestellmenge;
 
   if (propertyValue === null) return null;
 
@@ -71,8 +71,8 @@ function bb_econ_minOrderQuantity(values) {
   }
 }
 
-function bb_econ_qualificationNeeded(values) {
-  let propertyValue = variables.custom.qualificationNeeded;
+function bb_econ_qualifizierung(values) {
+  let propertyValue = variables.custom.qualifizierung;
 
   if (propertyValue === null) return null;
 
@@ -80,32 +80,32 @@ function bb_econ_qualificationNeeded(values) {
   else return 1.0;
 }
 
-function bb_econ_supplyLeadTime(values) {
+function bb_econ_lieferzeit(values) {
   const choices = {
-    "within3Days": "6eee7497-a73b-4039-aee7-480990bb5801",
-    "within7Days": "b8a106bf-fc0f-40e7-a337-907a801a9852",
-    "within14Days": "6ab9de5b-68dd-4e61-8a4f-635235998770",
-    "within30Days": "5b3cbe49-5fbb-43c7-bad1-3ef4e1951d0c",
-    "within90Days": "6b6929d7-b191-4dd6-b28b-6999d1be1c46",
-    "currentlyNotAvailable": "7e54ddcf-f921-464f-aa9d-29d631ec6ddd"
+    in3Tagen: "6eee7497-a73b-4039-aee7-480990bb5801",
+    in7Tagen: "b8a106bf-fc0f-40e7-a337-907a801a9852",
+    in14Tagen: "6ab9de5b-68dd-4e61-8a4f-635235998770",
+    in30Tagen: "5b3cbe49-5fbb-43c7-bad1-3ef4e1951d0c",
+    in90Tagen: "6b6929d7-b191-4dd6-b28b-6999d1be1c46",
+    derzeitNichtVerfuegbar: "7e54ddcf-f921-464f-aa9d-29d631ec6ddd"
   };
 
-  let propertyValue = variables.custom.supplyLeadTime;
+  let propertyValue = variables.custom.lieferzeit;
   
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case choices.within3Days:
+    case choices.in3Tagen:
       return 0;
-    case choices.within7Days:
+    case choices.in7Tagen:
       return 0.25;
-    case choices.within14Days:
+    case choices.in14Tagen:
       return 0.5;
-    case choices.within30Days:
+    case choices.in30Tagen:
       return 0.77;
-    case choices.within90Days:
+    case choices.in90Tagen:
       return 0.88;
-    case choices.currentlyNotAvailable:
+    case choices.derzeitNichtVerfuegbar:
       return 0.1;
     default:
       return null;
@@ -116,8 +116,8 @@ function bb_econ_supplyLeadTime(values) {
 
 // Tech score blackoxes //
 
-function bb_tech_coldResistance(values) {
-  let propertyValue = variables.custom.coldResistance;
+function bb_tech_kaeltebestaendigkeit(values) {
+  let propertyValue = variables.custom.kaeltebestaendigkeit;
 
   if (propertyValue === null) return null;
 
@@ -125,28 +125,28 @@ function bb_tech_coldResistance(values) {
   else return 1.0;
 }
 
-function bb_tech_color(values) {
+function bb_tech_farbe(values) {
   const choices = {
-    unicolor: "5bb7d3a8-9cf7-406d-b023-80138bce1985",
-    multicolor: "e499df01-e1d5-4735-957b-21070fcbef37"
+    einfarbig: "5bb7d3a8-9cf7-406d-b023-80138bce1985",
+    mehrfarbig: "e499df01-e1d5-4735-957b-21070fcbef37"
   };
 
-  let propertyValue = variables.custom.color;
+  let propertyValue = variables.custom.farbe;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case choices.unicolor:
+    case choices.einfarbig:
       return 1.0;
-    case choices.multicolor:
+    case choices.mehrfarbig:
       return 0.4;
     default:
       return null;
   }
 }
 
-function bb_tech_heatResistance(values) {
-  let propertyValue = variables.custom.heatResistance;
+function bb_tech_hitzebestaendigkeit(values) {
+  let propertyValue = variables.custom.hitzebestaendigkeit;
 
   if (propertyValue === null) return null;
 
@@ -154,10 +154,10 @@ function bb_tech_heatResistance(values) {
   else return 1.0;
 }
 
-function bb_tech_size(values) {
-  let propertyValue_l = variables.custom.length;
-  let propertyValue_b = variables.custom.width;
-  let propertyValue_h = variables.custom.height;
+function bb_tech_groesse(values) {
+  let propertyValue_l = variables.custom.laenge;
+  let propertyValue_b = variables.custom.breite;
+  let propertyValue_h = variables.custom.hoehe;
 
   if (
     propertyValue_l === null ||
@@ -180,6 +180,8 @@ function bb_tech_size(values) {
       return 0.7;
     case size < 54872000:
       return 0.5;
+    case size >= 54872000:
+      return 0;
     default:
       return null;
   }
@@ -189,8 +191,8 @@ function bb_tech_material(values) {
     ABS: "b9240c64-ce39-4d6c-8d4a-f8ef3005c41c",
     AISI302: "4374ff62-dc13-43a8-86f6-951394327781",
     AISI304: "8a2b85fb-e38a-4b75-82af-fd04e79b6c04",
-    Greycastiron: "f2c5328d-4cbb-4c07-ac1e-5d130fc9bba6",
-    Neoprene: "886e89b3-5055-4378-b696-5f005defe778",
+    Gusseisen: "f2c5328d-4cbb-4c07-ac1e-5d130fc9bba6",
+    Neopren: "886e89b3-5055-4378-b696-5f005defe778",
     PA11: "f76c129f-323d-465d-957a-e83922543f11",
     PA12: "705090e9-ab1a-4621-a54d-6cd1862b535d",
     PA6: "17975359-c11c-49a9-b9a5-d1f531194eb7",
@@ -219,16 +221,16 @@ function bb_tech_material(values) {
     case choices.PA66:
     case choices.PA66_30GF:
     case choices.POM:
-    case choices.Neoprene:
+    case choices.Neopren:
       return 0.5;
-    case choices.Greycastiron:
+    case choices.Gusseisen:
       return 0.3;
     default:
       return null;
   }
 }
-function bb_tech_partVisible(values) {
-  let propertyValue = variables.custom.partVisible;
+function bb_tech_sichtteil(values) {
+  let propertyValue = variables.custom.sichtteil;
 
   if (propertyValue === null) return null;
 
@@ -236,23 +238,23 @@ function bb_tech_partVisible(values) {
   else return 1.0;
 }
 
-function bb_tech_requiredTolerances(values) {
+function bb_tech_toleranz(values) {
   const choices = {
-    lessThan0_1mm: "46b21f19-fa8d-4da8-8d47-cddd8133cef5",
-    tl0_1mm: "c0207834-0b4b-4289-96d7-3d1955d2ed71",
-    tl0_2mm: "f1077315-4498-4f0d-9427-d933882ce9e6",
-    tl0_3mm: "d2796029-8ef8-45d8-a7ac-0652e328ee66",
-    tl0_4mm: "dc751a94-d70a-4181-b767-1eb558b080cb",
-    tl0_5mm: "2f6f3c77-067b-4e19-afb0-cf23934e0b58",
-    moreThan0_5mm: "e6a21386-0f5e-4f8e-93ef-6a32ad958ee1"
+    "kleiner0_1mm": "46b21f19-fa8d-4da8-8d47-cddd8133cef5",
+    "tl0_1mm": "c0207834-0b4b-4289-96d7-3d1955d2ed71",
+    "tl0_2mm": "f1077315-4498-4f0d-9427-d933882ce9e6",
+    "tl0_3mm": "d2796029-8ef8-45d8-a7ac-0652e328ee66",
+    "tl0_4mm": "dc751a94-d70a-4181-b767-1eb558b080cb",
+    "tl0_5mm": "2f6f3c77-067b-4e19-afb0-cf23934e0b58",
+    "groesser0_5mm": "e6a21386-0f5e-4f8e-93ef-6a32ad958ee1"
   };
   
-  let propertyValue = variables.custom.requiredTolerances;
+  let propertyValue = variables.custom.toleranz;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case choices.lessThan0_1mm:
+    case choices.kleiner0_1mm:
       return 0.3;
     case choices.tl0_1mm:
       return 0.5;
@@ -264,29 +266,52 @@ function bb_tech_requiredTolerances(values) {
       return 0.8;
     case choices.tl0_5mm:
       return 0.9;
-    case choices.moreThan0_5mm:
+    case choices.groesser0_5mm:
       return 1;
     default:
       return null;
   }
 }
-function bb_tech_surfaceQuality(values) {
+function bb_tech_oberflaechenbeschaffenheit(values) {
   const choices = {
-    rough: "b1913e06-2a33-4fb1-993e-15921434b3e0",
-    medium: "e299ad9c-1b64-450f-860c-a8e3d1c0dbf4",
-    smooth: "eee8f9eb-75f1-4019-9d60-7d1a7cbcddb9"
+    Rau: "b1913e06-2a33-4fb1-993e-15921434b3e0",
+    Normal: "e299ad9c-1b64-450f-860c-a8e3d1c0dbf4",
+    GlattGlaenzend: "eee8f9eb-75f1-4019-9d60-7d1a7cbcddb9"
   };
 
-  let propertyValue = variables.custom.surfaceQuality;
+  let propertyValue = variables.custom.oberflaechenbeschaffenheit;
 
   if (propertyValue === null) return null;
 
   switch (propertyValue) {
-    case choices.rough:
+    case choices.Rau:
       return 1.0;
-    case choices.medium:
+    case choices.Normal:
       return 0.5;
-    case choices.smooth:
+    case choices.GlattGlaenzend:
+      return 0.0;
+    default:
+      return null;
+  }
+}
+
+function bb_tech_formgenauigkeit(values) {
+  const choices = {
+    Gering: "57ebd841-b7cd-4bf6-8b61-ac5a67f3da8f",
+    Mittel: "8a3dff90-67b2-4bcb-aea2-54e094b704d8",
+    Hoch: "bd3d125c-5a2c-4bb7-b2cc-ebcbb45d882b"
+  };
+
+  let propertyValue = variables.custom.oberflaechenbeschaffenheit;
+
+  if (propertyValue === null) return null;
+
+  switch (propertyValue) {
+    case choices.Gering:
+      return 1.0;
+    case choices.Mittel:
+      return 0.5;
+    case choices.Hoch:
       return 0.0;
     default:
       return null;
@@ -297,11 +322,11 @@ function bb_tech_surfaceQuality(values) {
 
 function economical_weighted(values) {
   const blackboxes = [
-    { weight: 0.8, id: "4a8f8189-3fbd-4dc0-a21f-399e23368657" }, // Annual Demand
-    { weight: 1, id: "d9e2bba3-445c-4b05-9410-7a8442215758" }, // Current Part Price
-    { weight: 0.3, id: "898229fa-162a-4f7f-a43f-a471b14fa266" }, // Min Order Quantity
-    { weight: 0.5, id: "9735bed1-d356-421b-9d1d-43f9ddfbfc53" }, // Qualification Needed?
-    { weight: 0.2, id: "3de0d565-cbc5-41a4-9c4e-057658ea4d8d" }, // Supply Lead Time
+    { weight: 0.8, id: "uuid" }, // Stückzahl
+    { weight: 1, id: "uuid" }, // Stückkosten
+    { weight: 0.3, id: "uuid" }, // Minindestbestellmenge
+    { weight: 0.5, id: "uuid" }, // Qualifizierung
+    { weight: 0.2, id: "uuid" }, // Lieferzeit
   ];
 
   let score = 0;
@@ -327,14 +352,15 @@ function economical_weighted(values) {
 
 function technological_weighted(values) {
   const blackboxes = [
-    { weight: 0.3, id: "e7e4eaff-0349-4e28-abf5-80e618fbb449" }, // Cold Resistance
-    { weight: 0.3, id: "e571a6cd-ed0f-4f05-b877-4f8ccb7768d6" }, // Color
-    { weight: 0.5, id: "cd3454ad-de55-4b84-937d-223fc8019d6e" }, // Heat resistance
-    { weight: 0.9, id: "9f169e01-d5bd-4e60-86f5-682aaa3da1c9" }, // Size
-    { weight: 1, id: "7f9cb4e9-a562-455a-b935-3300583c8cc4" }, // Material
-    { weight: 0.6, id: "8dccf1e6-c271-4d06-a7db-2bc3ad33ce86" }, // Part Visible
-    { weight: 0.8, id: "a9eb02b9-80aa-4b65-b2b8-cc52fb5165b8" }, // Required Tolerances
-    { weight: 0.6, id: "4a9816c6-6329-4be6-8cf1-92db0e5ab83e" }, // Surface Quality
+    { weight: 0.3, id: "uuid" }, // Kältebeständigkeit
+    { weight: 0.3, id: "uuid" }, // Farbe
+    { weight: 0.5, id: "uuid" }, // Hitzebeständigkeit
+    { weight: 0.9, id: "uuid" }, // Größe
+    { weight: 1, id: "uuid" }, // Material
+    { weight: 0.6, id: "uuid" }, // Sichtteil
+    { weight: 0.8, id: "uuid" }, // toleranz
+    { weight: 0.6, id: "uuid" }, // Oberflächenbeschaffenheit
+    { weight: 0.5, id: "uuid" }, // Formgenauigkeit
   ];
 
   let score = 0;
