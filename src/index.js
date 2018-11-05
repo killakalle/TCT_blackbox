@@ -302,7 +302,7 @@ function bb_tech_formgenauigkeit(values) {
     Hoch: "bd3d125c-5a2c-4bb7-b2cc-ebcbb45d882b"
   };
 
-  let propertyValue = variables.custom.oberflaechenbeschaffenheit;
+  let propertyValue = variables.custom.formgenauigkeit;
 
   if (propertyValue === null) return null;
 
