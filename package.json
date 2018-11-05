@@ -1,5 +1,5 @@
 {
-  "name": "blackbox-ampi-demo-server",
+  "name": "bambus-demo-server",
   "version": "1.0.0",
   "description": "Simple algorithm to evaluate criteria",
   "main": "index.html",

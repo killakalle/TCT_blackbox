@@ -1,6 +1,6 @@
 const variables
 
-// blackboxes
+// blackboxes for Bambus server
 // should return a number between 0 and 1
 
 // Econ score blackoxes //
